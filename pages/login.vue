@@ -2,7 +2,7 @@
   <div class="flex flex-col grow justify-center items-center gap-4">
     <ChronoLogo />
     <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] h-[370px]">
-      <h1 class="text-2xl font-bricolage">Welcome Back!</h1>
+      <h1 class="text-2xl font-bricolage">Welcome Back</h1>
       <Input placeholder="Email" />
       <Input placeholder="Password" />
       <p class="text-sm text-gray-500 underline">Forgot your password?</p>
