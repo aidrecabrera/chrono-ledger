@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col grow justify-center items-center gap-4">
-    <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] h-[350px]">
+    <ChronoLogo />
+    <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] h-[370px]">
       <h1 class="text-2xl font-bricolage">Welcome Back!</h1>
       <Input placeholder="Email" />
       <Input placeholder="Password" />
@@ -10,7 +11,9 @@
           Log In
         </Button>
       </NuxtLink>
-      <p class="text-sm text-gray-500">Don't have an account? <NuxtLink to="/register" class="underline font-medium">Sign Up</NuxtLink></p>
+      <p class="text-sm text-gray-500">Don't have an account? <NuxtLink to="/register" class="underline font-medium">
+          Sign Up</NuxtLink>
+      </p>
     </Card>
   </div>
 </template>
