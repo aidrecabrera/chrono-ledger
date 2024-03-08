@@ -6,7 +6,13 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
+    '@nuxtjs/google-fonts',
   ],
+  googleFonts: {
+    families: {
+      'Bricolage+Grotesque': true
+    }
+  },
   tailwindcss: {
     cssPath: '~/assets/css/tailwind.css',
     configPath: 'tailwind.config',

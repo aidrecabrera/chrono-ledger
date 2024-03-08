@@ -15,6 +15,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        bricolage: ["Bricolage Grotesque", "sans-serif"],
+      },
       colors: {
         clb: {
           100: '#ecf0ff',
