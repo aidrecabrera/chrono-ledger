@@ -16,6 +16,24 @@ module.exports = {
     },
     extend: {
       colors: {
+        clb: {
+          100: '#ecf0ff',
+          200: '#bdceff',
+          300: '#7da6ff',
+          400: '#0080fb',
+          500: '#005db9',
+          600: '#003c7c',
+          700: '#001E44',
+        },
+        cln: {
+          100: '#d9dadd',
+          200: '#b1b3b8',
+          300: '#8a8d95',
+          400: '#66686f',
+          500: '#45464b',
+          600: '#26272a',
+          700: '#101113',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

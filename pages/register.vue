@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Hello, Register.</h1>
-    <button><NuxtLink to="/login">Login</NuxtLink></button>
+    <NuxtLink to="/login"><Button>Login</Button></NuxtLink>
   </div>
 </template>
 
@@ -9,6 +9,4 @@
 
 </script>
 
-<style>
-
-</style>
+<style></style>
