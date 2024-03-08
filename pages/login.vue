@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <h1>This is the login page</h1>
-    <NuxtLink to="/register">
-      <Button>
-        Sign Up
-      </Button>
-    </NuxtLink>
+  <div class="flex flex-col grow justify-center items-center gap-4">
+    <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] h-[350px]">
+      <h1 class="text-2xl font-square-display">Welcome Back!</h1>
+      <Input placeholder="Email" />
+      <Input placeholder="Password" />
+      <p class="text-sm text-gray-500 underline">Forgot your password?</p>
+      <NuxtLink to="/register" class="w-full">
+        <Button class="w-full">
+          Log In
+        </Button>
+      </NuxtLink>
+      <p class="text-sm text-gray-500">Don't have an account? <NuxtLink to="/register" class="underline">Sign Up</NuxtLink></p>
+    </Card>
   </div>
 </template>
 
