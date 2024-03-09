@@ -13,10 +13,8 @@ export const signUpNewUser = async ({ email, password, first_name, last_name, us
     },
   })
   if (error) {
-    console.error('Error signing up:', error)
-    return
+    throw error
   }
-  console.log('User data:', data)
 }
 
 export const signInWithEmail = async ({ email, password, supabase }: SignInWithEmailProps & { supabase: any }) => {
@@ -28,8 +26,7 @@ export const signInWithEmail = async ({ email, password, supabase }: SignInWithE
     }
   })
   if (error) {
-    console.error('Error signing up:', error)
-    return
+    throw error
   }
   navigateTo('/')
 }

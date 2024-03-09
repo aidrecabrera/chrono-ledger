@@ -20,7 +20,9 @@ const form = useForm({
 // * Sign in user with email and password
 const supabase = useSupabaseClient()
 const onSubmit = form.handleSubmit((values) => {
-  signInWithEmail({ email: values.email, password: values.password, supabase: supabase })
+  signInWithEmail({ email: values.email, password: values.password, supabase: supabase }).catch((error) => {
+    form.setErrors({ password: error.message })
+  })
 })
 
 // * Redirect user to home page if they are already logged in
@@ -36,7 +38,7 @@ watchEffect(() => {
   <div class="flex flex-col grow justify-center items-center gap-4">
     <ChronoLogo />
     <form @submit="onSubmit">
-      <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] h-[370px]">
+      <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] min-h-[370px]">
         <h1 class="text-2xl font-bricolage">Welcome Back</h1>
         <FormField v-slot="{ componentField }" name="email">
           <FormItem class="w-full">
@@ -44,6 +46,7 @@ watchEffect(() => {
               <Input id="email" required type="text" placeholder="Email" v-bind="componentField" />
             </FormControl>
           </FormItem>
+          <FormMessage class="-my-2" />
         </FormField>
         <FormField v-slot="{ componentField }" name="password">
           <FormItem class="w-full">
@@ -51,6 +54,7 @@ watchEffect(() => {
               <Input id="password" required type="password" placeholder="Password" v-bind="componentField" />
             </FormControl>
           </FormItem>
+          <FormMessage class="-my-2" />
         </FormField>
         <p class="text-sm text-gray-500 underline">Forgot your password?</p>
         <NuxtLink class="w-full">
