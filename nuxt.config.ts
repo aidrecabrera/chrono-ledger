@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/google-fonts',
     '@nuxt/image',
-    '@nuxtjs/supabase'
+    '@nuxtjs/supabase',
+    '@pinia/nuxt',
   ],
   googleFonts: {
     families: {
@@ -31,11 +32,7 @@ export default defineNuxtConfig({
     classSuffix: ''
   },
   supabase: {
-    redirectOptions: {
-      login: '/login',
-      callback: '/',
-      exclude: ['/register']
-    }
+    redirect: false,
   },
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' }

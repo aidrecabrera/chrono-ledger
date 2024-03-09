@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-const admin = useSupabaseUser()
-console.log(admin)
+
 </script>
 
 <template>

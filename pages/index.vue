@@ -12,8 +12,9 @@ const logout = async () => {
   await supabase.auth.signOut()
 }
 watchEffect(() => {
-  if (!user.value) {
+  if (!user.value) {  
     navigateTo('/login')
+    useAdminInformationStore().$reset
   }
 })
 definePageMeta({
