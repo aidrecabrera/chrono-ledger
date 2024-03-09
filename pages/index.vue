@@ -15,4 +15,17 @@ watchEffect(() => {
 definePageMeta({
   middleware: 'authentication'
 })
+
+const supabase = useSupabaseClient()
+
+let { data: ao_management, error } = await supabase
+  .from('ao_management')
+  .select(`
+    *,
+    organizations: organizations(*),
+    users: users(*)
+  `)
+
+console.log(ao_management);
+
 </script>

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import ScrollArea from '~/components/ui/scroll-area/ScrollArea.vue';
+
 const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 const logout = async () => {
@@ -8,7 +10,7 @@ const logout = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col flex-grow max-h-screen max-w-screen">
+  <div class="flex flex-col flex-grow max-h-screen max-w-screen overflow-hidden">
     <div v-if="user" class="sticky top-0 flex justify-between items-center bg-background border-b px-11 py-3">
       <NavigationAvatarMenu @logout="logout" />
       <NavigationAvatarMenuDropDown :logout="logout" />
@@ -17,8 +19,10 @@ const logout = async () => {
       <div class="border-r w-[300px] min-h-[93vh]">
         <NavigationSidebar />
       </div>
-      <div class="w-10/12 p-8">
-        <slot />
+      <div class="w-10/12">
+        <ScrollArea class="min-w-screen grow max-h-screen">
+          <slot />
+        </ScrollArea>
       </div>
     </div>
   </div>

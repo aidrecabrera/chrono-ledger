@@ -1,6 +1,6 @@
 import { Card, NuxtImg, Input, Separator } from '../../.nuxt/components';
 <template>
-  <div class="flex flex-col gap-4 w-full">
+  <div class="flex flex-col gap-4 p-8 w-full max-h-screen">
     <h1 class="text-4xl">General</h1>
     <Card class="flex flex-col">
       <div class="flex flex-row justify-between px-10 py-10">
@@ -101,9 +101,11 @@ import { Card, NuxtImg, Input, Separator } from '../../.nuxt/components';
       </div>
     </Card>
   </div>
-</template>
 
+</template>
 <script lang="ts" setup>
+import ScrollArea from '~/components/ui/scroll-area/ScrollArea.vue';
+
 const profileInformation = useAdminInformationStore()
 const profile = {
   firstName: profileInformation.$state.information?.first_name,
@@ -111,7 +113,6 @@ const profile = {
   email: profileInformation.$state.information?.email,
   username: profileInformation.$state.information?.username,
 }
-
 </script>
 
 <style></style>
