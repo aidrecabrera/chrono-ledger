@@ -58,7 +58,8 @@ const colorMode = useColorMode()
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="rounded-full w-10 h-10 p-0">
-        <NuxtImg class="rounded-full outline outline-secondary hover:outline-slate-300 transition-all duration-300"
+        <NuxtImg
+          class="rounded-full outline outline-1 outline-background hover:outline-slate-300 transition-all duration-300"
           src="https://github.com/radix-vue.png" width="40" />
       </Button>
     </DropdownMenuTrigger>
@@ -72,47 +73,14 @@ const colorMode = useColorMode()
         <DropdownMenuItem>
           <User class="mr-2 h-4 w-4" />
           <span>Profile</span>
-          <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <CreditCard class="mr-2 h-4 w-4" />
-          <span>Billing</span>
-          <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Settings class="mr-2 h-4 w-4" />
           <span>Settings</span>
-          <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Keyboard class="mr-2 h-4 w-4" />
-          <span>Keyboard shortcuts</span>
-          <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuGroup>
-      <DropdownMenuSeparator />
       <DropdownMenuGroup>
-        <DropdownMenuItem class="hover:bg-transparent/100">
-          <Select v-model="colorMode.preference">
-            <SelectTrigger class="border-0 h-5 -mr-10">
-              <SunMoon class="-ml-3 h-4 w-4 " />
-              <SelectValue class="ml-3 text-left w-full" placeholder="Theme" />
-            </SelectTrigger>
-            <SelectContent class="mr-[13.5rem] -mt-6">
-              <SelectGroup>
-                <SelectItem value="system">
-                  System
-                </SelectItem>
-                <SelectItem value="light">
-                  Light
-                </SelectItem>
-                <SelectItem value="dark">
-                  Dark
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </DropdownMenuItem>
+
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <UserPlus class="mr-2 h-4 w-4" />
@@ -139,7 +107,27 @@ const colorMode = useColorMode()
         <DropdownMenuItem>
           <Plus class="mr-2 h-4 w-4" />
           <span>New Team</span>
-          <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+        </DropdownMenuItem>
+        <DropdownMenuItem class="pr-0 -mr-0">
+          <Select class="appearance-none bg-transparent shadow-none" v-model="colorMode.preference">
+            <SelectTrigger class="outline-none border-0 h-5 appearance-none bg-transparent shadow-none">
+              <SunMoon class="-ml-3 h-4 w-4 " />
+              <SelectValue class="ml-3 text-left w-full outline-none" placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent class="mr-[13.5rem] -mt-6">
+              <SelectGroup>
+                <SelectItem value="system">
+                  System
+                </SelectItem>
+                <SelectItem value="light">
+                  Light
+                </SelectItem>
+                <SelectItem value="dark">
+                  Dark
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
@@ -151,15 +139,10 @@ const colorMode = useColorMode()
         <LifeBuoy class="mr-2 h-4 w-4" />
         <span>Support</span>
       </DropdownMenuItem>
-      <DropdownMenuItem disabled>
-        <Cloud class="mr-2 h-4 w-4" />
-        <span>API</span>
-      </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
+      <DropdownMenuItem @click="props.logout">
         <LogOut class="mr-2 h-4 w-4" />
-        <span @click="props.logout">Log out</span>
-        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        <span>Log out</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
