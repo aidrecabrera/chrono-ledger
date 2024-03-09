@@ -8,7 +8,7 @@ const logout = async () => {
 
 <template>
   <div class="flex flex-col flex-grow h-screen w-screen">
-    <div v-if="user" class="flex justify-between items-center bg-background border-b px-7 py-3">
+    <div v-if="user" class="flex justify-between items-center bg-background border-b px-11 py-3">
       <NavigationAvatarMenu @logout="logout" />
       <NavigationAvatarMenuDropDown :logout="logout" />
     </div>

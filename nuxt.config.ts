@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/supabase',
     '@pinia/nuxt',
+    "@nuxt/fonts"
   ],
   googleFonts: {
     families: {
@@ -37,4 +38,41 @@ export default defineNuxtConfig({
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' }
   },
+  fonts: {
+    families: [
+      {
+        name: 'Square Sans Display',
+        provider: 'custom',
+        src: 'url("https://square-fonts-production-f.squarecdn.com/square-display/SquareSansDisplay-VF.woff2")',
+        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+        styles: ['normal'],
+      },
+      {
+        name: 'Square Sans Text Italic',
+        provider: 'custom',
+        src: 'url("https://square-fonts-production-f.squarecdn.com/square-text/SquareSansText-Italic-VF.woff2")',
+        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+        styles: ['italic'],
+      },
+      {
+        name: 'Square Sans Text Medium',
+        provider: 'custom',
+        src: 'url("https://square-fonts-production-f.squarecdn.com/square-text/SquareSansText-Medium.woff2")',
+        weights: [500],
+        styles: ['normal'],
+      },
+      {
+        name: 'Square Sans Text Upright',
+        provider: 'custom',
+        src: 'url("https://square-fonts-production-f.squarecdn.com/square-text/SquareSansText-Upright-VF.woff2")',
+        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+        styles: ['normal'],
+      },
+    ],
+    defaults: {
+      weights: [400, 500, 700, 900],
+      styles: ['normal', 'italic'],
+      subsets: [],
+    },
+  }
 })

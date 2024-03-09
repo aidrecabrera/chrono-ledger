@@ -43,7 +43,7 @@ watchEffect(() => {
     <ChronoLogo />
     <form @submit="onSubmit">
       <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] min-h-[370px]">
-        <h1 class="text-2xl font-bricolage">Welcome Back</h1>
+        <h1 class="text-2xl">Welcome Back</h1>
         <FormField v-slot="{ componentField }" name="email">
           <FormItem class="w-full">
             <FormControl>

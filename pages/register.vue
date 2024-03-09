@@ -61,7 +61,7 @@ const agreementState = useState('agreementState', () => false)
     <ChronoLogo />
     <form @submit="onSubmit">
       <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] min-h-[517px]">
-        <h1 class="text-2xl font-bricolage">Get Started</h1>
+        <h1 class="text-2xl">Get Started</h1>
         <div class="flex flex-row gap-2">
           <FormField v-slot="{ componentField }" name="firstName">
             <FormItem class="w-full">

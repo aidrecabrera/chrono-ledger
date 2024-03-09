@@ -17,6 +17,10 @@ module.exports = {
     extend: {
       fontFamily: {
         bricolage: ["Bricolage Grotesque", "sans-serif"],
+        "square-display": ["Square Sans Display", "sans-serif"],
+        "square-italic": ["Square Sans Text Italic", "sans-serif"],
+        "square-medium": ["Square Sans Text Medium", "sans-serif"],
+        "square-upright": ["Square Sans Text Upright", "sans-serif"],
       },
       colors: {
         clb: {

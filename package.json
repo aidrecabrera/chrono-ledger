@@ -31,6 +31,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@nuxt/fonts": "^0.0.2",
     "@nuxtjs/supabase": "^1.1.7",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "shadcn-nuxt": "^0.10.0",
