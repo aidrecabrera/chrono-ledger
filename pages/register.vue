@@ -8,6 +8,11 @@ import {
 } from '@/components/ui/form'
 import { useForm } from 'vee-validate';
 import { signUpNewUser } from '~/services/authServices';
+
+definePageMeta({
+  layout: 'noauth'
+})
+
 // * Redirect user to home page if they are already logged in
 const user = useSupabaseUser()
 watchEffect(() => {
@@ -63,7 +68,7 @@ const agreementState = useState('agreementState', () => false)
               <FormControl>
                 <Input id="firstName" required type="text" placeholder="First Name" v-bind="componentField" />
               </FormControl>
-              <FormMessage name="firstName"/>
+              <FormMessage name="firstName" />
             </FormItem>
           </FormField>
           <FormField v-slot="{ componentField }" name="lastName">
@@ -71,7 +76,7 @@ const agreementState = useState('agreementState', () => false)
               <FormControl>
                 <Input id="lastName" required type="text" placeholder="Last Name" v-bind="componentField" />
               </FormControl>
-              <FormMessage name="lastName"/>
+              <FormMessage name="lastName" />
             </FormItem>
           </FormField>
         </div>
@@ -80,7 +85,7 @@ const agreementState = useState('agreementState', () => false)
             <FormControl>
               <Input id="username" required type="text" placeholder="Username" v-bind="componentField" />
             </FormControl>
-            <FormMessage name="username"/>
+            <FormMessage name="username" />
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="email">
@@ -88,7 +93,7 @@ const agreementState = useState('agreementState', () => false)
             <FormControl>
               <Input id="email" required type="text" placeholder="Email" v-bind="componentField" />
             </FormControl>
-            <FormMessage name="email"/>
+            <FormMessage name="email" />
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="password">
@@ -96,7 +101,7 @@ const agreementState = useState('agreementState', () => false)
             <FormControl>
               <Input id="password" required type="password" placeholder="Password" v-bind="componentField" />
             </FormControl>
-            <FormMessage name="password"/>
+            <FormMessage name="password" />
           </FormItem>
         </FormField>
         <FormField v-slot="{ componentField }" name="confirmPassword">
@@ -105,7 +110,7 @@ const agreementState = useState('agreementState', () => false)
               <Input id="confirmPassword" required type="password" placeholder="Confirm Password"
                 v-bind="componentField" />
             </FormControl>
-            <FormMessage name="confirmPassword"/>
+            <FormMessage name="confirmPassword" />
           </FormItem>
         </FormField>
         <div class="flex flex-row items-center gap-2">

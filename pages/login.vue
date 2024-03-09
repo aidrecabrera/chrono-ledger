@@ -9,6 +9,10 @@ import {
 import { useForm } from 'vee-validate';
 import { signInWithEmail } from '~/services/authServices';
 
+definePageMeta({
+  layout: 'noauth'
+})
+
 const loginFormSchema = toTypedSchema(z.object({
   email: z.string().email(),
   password: z.string().min(8),

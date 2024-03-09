@@ -32,6 +32,9 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: 2.1.0
+  lucide-vue-next:
+    specifier: ^0.353.0
+    version: 0.353.0(vue@3.4.21)
   nuxt:
     specifier: ^3.10.3
     version: 3.10.3(typescript@5.4.2)(vite@5.1.5)
@@ -4513,6 +4516,14 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
+
+  /lucide-vue-next@0.353.0(vue@3.4.21):
+    resolution: {integrity: sha512-tQ0OZla8zXaN/iw3SCdYR2Ny4/7TOUwF/3CF1Pd2m6DFbDA0qiC8Dp4+bBkwNKHqzia4Tlsw98KcZHXME9FICg==}
+    peerDependencies:
+      vue: '>=3.0.1'
+    dependencies:
+      vue: 3.4.21(typescript@5.4.2)
+    dev: false
 
   /magic-string-ast@0.3.0:
     resolution: {integrity: sha512-0shqecEPgdFpnI3AP90epXyxZy9g6CRZ+SZ7BcqFwYmtFEnZ1jpevcV5HoyVnlDS9gCnc1UIg3Rsvp3Ci7r8OA==}
