@@ -36,5 +36,8 @@ export default defineNuxtConfig({
       callback: '/',
       exclude: ['/register']
     }
-  }
+  },
+  app: {
+    layoutTransition: { name: 'layout', mode: 'out-in' }
+  },
 })
