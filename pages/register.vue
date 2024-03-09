@@ -1,3 +1,12 @@
+<script lang="ts" setup>
+// * Redirect user to home page if they are already logged in
+const user = useSupabaseUser()
+watchEffect(() => {
+  if (user.value) {
+    navigateTo('/')
+  }
+})
+</script>
 <template>
   <div class="flex flex-col grow justify-center items-center gap-4">
     <ChronoLogo/>
@@ -26,9 +35,3 @@
     </Card>
   </div>
 </template>
-
-<script lang="ts" setup>
-
-</script>
-
-<style></style>

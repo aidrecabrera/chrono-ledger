@@ -1,8 +1,6 @@
 import type { SignInWithEmailProps, SignUpNewUserProps } from "~/types/authServices.types"
 
-const supabase = useSupabaseClient()
-
-export const signUpNewUser = async ({ email, password, options }: SignUpNewUserProps) => {
+export const signUpNewUser = async ({ email, password, options, supabase }: SignUpNewUserProps & { supabase: any }) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -15,19 +13,22 @@ export const signUpNewUser = async ({ email, password, options }: SignUpNewUserP
   console.log('User data:', data)
 }
 
-export const signInWithEmail = async ({ email, password}: SignInWithEmailProps) => {
+export const signInWithEmail = async ({ email, password, supabase }: SignInWithEmailProps & { supabase: any }) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
-    password
+    password,
+    options: {
+      redirectTo: '/'
+    }
   })
   if (error) {
     console.error('Error signing up:', error)
     return
   }
-  console.log('User data:', data)
+  navigateTo('/')
 }
 
-export const signOut = async () => {
+export const signOutUser = async (supabase: any) => {
   const { error } = await supabase.auth.signOut()
   if (error) {
     console.error('Error signing out:', error)
