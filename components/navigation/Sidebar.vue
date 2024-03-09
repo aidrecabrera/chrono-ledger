@@ -50,4 +50,11 @@ const navItems = [
   { name: 'Reports', path: '/reports', icon: FileBarChart2 },
 ];
 const isOpen = ref(false)
+
+const router = useRouter();
+router.afterEach((to, from) => {
+  if (!to.path.includes('/settings')) {
+    isOpen.value = false;
+  }
+});
 </script>

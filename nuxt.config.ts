@@ -33,7 +33,11 @@ export default defineNuxtConfig({
     classSuffix: ''
   },
   supabase: {
-    redirect: false,
+    redirectOptions: {
+      login: '/login',
+      callback: '/',
+      exclude: ['/register']
+    }
   },
   app: {
     layoutTransition: { name: 'layout', mode: 'out-in' }
