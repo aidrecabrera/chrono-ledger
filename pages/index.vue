@@ -9,12 +9,11 @@
 const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 
-watchEffect(() => {
-  if (!user.value) {
-    navigateTo('/login')
-  }
-})
 const logout = async () => {
   await supabase.auth.signOut()
 }
-</script>
+
+definePageMeta({
+  middleware: 'authentication'
+})
+</script> 

@@ -1,10 +1,16 @@
 import type { SignInWithEmailProps, SignUpNewUserProps } from "~/types/authServices.types"
 
-export const signUpNewUser = async ({ email, password, options, supabase }: SignUpNewUserProps & { supabase: any }) => {
+export const signUpNewUser = async ({ email, password, first_name, last_name, username, supabase }: SignUpNewUserProps & { supabase: any }) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options,
+    options: {
+      data: {
+        first_name: first_name,
+        last_name: last_name,
+        username: username,
+      }
+    },
   })
   if (error) {
     console.error('Error signing up:', error)
@@ -18,7 +24,7 @@ export const signInWithEmail = async ({ email, password, supabase }: SignInWithE
     email,
     password,
     options: {
-      redirectTo: '/'
+      redirectTo: '/' 
     }
   })
   if (error) {

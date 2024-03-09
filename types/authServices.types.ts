@@ -1,7 +1,9 @@
 export interface SignUpNewUserProps {
     email: string
     password: string
-    options?: {}
+    first_name: string
+    last_name: string
+    username: string
 }
 
 export interface SignInWithEmailProps {
