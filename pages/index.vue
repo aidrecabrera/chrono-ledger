@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CalendarCheck2, EyeIcon } from 'lucide-vue-next';
+import { CalendarCheck2, EyeIcon, PlusCircleIcon } from 'lucide-vue-next';
 import type { AoManagement } from '~/types/aoManagement.types';
 
 // * Route Guard, preventing unauthorized access
@@ -22,6 +22,8 @@ import { useAoManagementStore } from '../composables/aoManagementStore';
 const ao_management_data = computed(() => useAoManagementStore().$state.ao_management);
 const pending = computed(() => useAoManagementStore().$state.pending);
 
+console.log(ao_management_data.value);
+
 </script>
 
 <template>
@@ -35,6 +37,16 @@ const pending = computed(() => useAoManagementStore().$state.pending);
             stroke="white" stroke-linejoin="round" class="chrono-ledger-1"></path>
         </svg>
         <h1>Loading</h1>
+      </div>
+      <div v-else-if="ao_management_data?.length === 0"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
+        <Card
+          class="flex flex-col sm:flex-row justify-center items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-200 hover:border-white/50 text-white/75 hover:text-white/100">
+          <div class="flex flex-row gap-2 items-center">
+            <PlusCircleIcon />
+            <span class="text-sm">New Organization</span>
+          </div>
+        </Card>
       </div>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
         <div v-for="organization in ao_management_data" :key="organization.organization_id">
