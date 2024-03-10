@@ -79,9 +79,8 @@ const isOpenOrganization = ref(true)
 // * All I need for Supabase communication
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { AoManagement } from '~/types/aoManagement.types';
-import { DotsHorizontalIcon } from '@radix-icons/vue';
-const supabase = useSupabaseClient();
 
+const supabase = useSupabaseClient();
 // * Fetching ao_management data
 const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management', async () => {
   const { data: ao_management } = await supabase
@@ -99,23 +98,19 @@ const { data: ao_management_data, refresh: refresh_ao_management_data, pending }
 
 // * Realtime updates for ao_management data
 let aoManagementChannel: RealtimeChannel | null = null;
-onMounted(() => {
-  aoManagementChannel = supabase.channel('public:ao_management')
-    .on('postgres_changes',
-      { event: '*', schema: 'public', table: 'ao_management' },
-      (payload) => {
-        console.log('Realtime update:', payload);
-        refresh_ao_management_data();
-      }
-    )
-  aoManagementChannel.subscribe();
-});
+aoManagementChannel = supabase.channel('public:ao_management')
+  .on('postgres_changes',
+    { event: '*', schema: 'public', table: 'ao_management' },
+    (payload) => {
+      console.log('Realtime update:', payload);
+      refresh_ao_management_data();
+    }
+  )
+aoManagementChannel.subscribe();
 // * Unsubscribing when user is not on the page
-onUnmounted(() => {
-  if (aoManagementChannel) {
-    aoManagementChannel.unsubscribe();
-  }
-});
+if (!useAdminInformationStore().$state.information) {
+  aoManagementChannel.unsubscribe();
+}
 // * Watch for changes in ao_management and pending state
 watch([ao_management_data, pending], ([newAoManagementData, newPending]) => {
   useAoManagementStore().$patch({
@@ -123,5 +118,9 @@ watch([ao_management_data, pending], ([newAoManagementData, newPending]) => {
     pending: newPending
   });
 });
+
+useAoManagementStore().$subscribe((mutation) => {
+  if ('payload' in mutation && 'archived_ao_management' in mutation.payload) refresh_ao_management_data()
+})
 
 </script>

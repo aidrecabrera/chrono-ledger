@@ -5,7 +5,7 @@ const user = useSupabaseUser()
 const supabase = useSupabaseClient()
 const logout = async () => {
   await supabase.auth.signOut()
-  useAoManagementStore().reset()
+  useAoManagementStore().RESET()
   navigateTo('/login')
 }
 </script>

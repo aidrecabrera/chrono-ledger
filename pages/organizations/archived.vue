@@ -15,24 +15,56 @@ definePageMeta({
 })
 
 // * All I need for Supabase communication
-import { useAdminInformationStore } from '../composables/adminInformationStore';
-import { useAoManagementStore } from '../composables/aoManagementStore';
-import { archiveOrganization } from '~/services/organizationServices';
+import type { RealtimeChannel } from "@supabase/supabase-js"
+import { unarchiveOrganization } from '~/services/organizationServices';
+const supabase = useSupabaseClient();
 
-// * Update this if the store changes
-const ao_management_data = computed(() => useAoManagementStore().$state.ao_management);
-const pending = computed(() => useAoManagementStore().$state.pending);
+// * Fetching ao_management data
+const { data: archived_ao_management_data, refresh: refresh_archived_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('archived_ao_management', async () => {
+  const { data: archived_ao_management_data } = await supabase
+    .from('ao_management')
+    .select(`
+      *,
+      organizations: organizations(*),
+      users: users(*)
+    `)
+    .eq('archived', true) // * New Update: It allows the user to see archived organizations
+  return archived_ao_management_data as AoManagement[];
+}, {
+  lazy: true,
+});
 
-const supabase = useSupabaseClient()
-const handleArchiveOrganization = async (id: number) => {
-  archiveOrganization({ organizationId: id, supabase: supabase })
-    .then(() => {
+// * Realtime updates for ao_management data
+let aoManagementChannel: RealtimeChannel | null = null;
+onMounted(() => {
+  aoManagementChannel = supabase.channel('public:archived_ao_management')
+    .on('postgres_changes',
+      { event: '*', schema: 'public', table: 'ao_management' },
+      (payload) => {
+        refresh_archived_ao_management_data();
+      }
+    )
+  aoManagementChannel.subscribe();
+});
+// * Unsubscribing when user is not on the page
+onUnmounted(() => {
+  if (aoManagementChannel) {
+    aoManagementChannel.unsubscribe();
+  }
+});
+// * Watch for changes in ao_management and pending state
+watch([archived_ao_management_data, pending], ([newArchivedAoManagementData, newPending]) => {
+  useAoManagementStore().$patch({
+    archived_ao_management: newArchivedAoManagementData,
+    pending: newPending
+  });
+});
 
-    })
-    .catch(error => {
-      console.log(error)
-    })
+const handleUnarchivedOrganization = async (id: number) => {
+  unarchiveOrganization({ organizationId: id, supabase })
+  useAoManagementStore().REMOVE_ARCHIVED_AO_MANAGEMENT(id)
 }
+
 </script>
 
 <template>
@@ -47,7 +79,7 @@ const handleArchiveOrganization = async (id: number) => {
         </svg>
         <h1>Loading</h1>
       </div>
-      <NuxtLink to="/organizations/create" v-else-if="ao_management_data?.length === 0"
+      <NuxtLink to="/organizations/create" v-else-if="archived_ao_management_data?.length === 0"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
         <Card
           class="flex flex-col sm:flex-row justify-center items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-200 hover:border-white/50 text-white/75 hover:text-white/100">
@@ -58,7 +90,7 @@ const handleArchiveOrganization = async (id: number) => {
         </Card>
       </NuxtLink>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
-        <div v-for="organization in ao_management_data" :key="organization.organization_id">
+        <div v-for="organization in archived_ao_management_data" :key="organization.organization_id">
           <Card
             class="flex flex-col sm:flex-row justify-between items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-1000">
             <div
@@ -86,7 +118,7 @@ const handleArchiveOrganization = async (id: number) => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>Manage</DropdownMenuItem>
-                    <DropdownMenuItem :onclick="() => handleArchiveOrganization(organization.organization_id)">Delete
+                    <DropdownMenuItem :onclick="() => handleUnarchivedOrganization(organization.organization_id)">Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

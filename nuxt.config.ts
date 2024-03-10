@@ -6,7 +6,13 @@ var description =
 var url = "https://www.rechrono.so/"; // Replace 'yourwebsite.com' with your actual website URL
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true
+    }
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     'shadcn-nuxt',
