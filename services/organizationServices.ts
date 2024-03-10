@@ -42,4 +42,12 @@ export const unarchiveOrganization = async ({ organizationId, supabase }: Archiv
     .select()
     if (error) throw error
     return archived_organization
-} 
+}
+
+export const deleteArchivedOrganization = async ({ organizationId, supabase }: ArchiveOrganizationProps) => {
+    const { error } = await supabase
+    .from('organizations')
+    .delete()
+    .eq('organization_id', organizationId)
+    if (error) throw error
+}

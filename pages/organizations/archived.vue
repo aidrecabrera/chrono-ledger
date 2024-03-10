@@ -16,7 +16,7 @@ definePageMeta({
 
 // * All I need for Supabase communication
 import type { RealtimeChannel } from "@supabase/supabase-js"
-import { unarchiveOrganization } from '~/services/organizationServices';
+import { deleteArchivedOrganization, unarchiveOrganization } from '~/services/organizationServices';
 const supabase = useSupabaseClient();
 
 // * Fetching ao_management data
@@ -63,6 +63,11 @@ watch([archived_ao_management_data, pending], ([newArchivedAoManagementData, new
 const handleUnarchivedOrganization = async (id: number) => {
   unarchiveOrganization({ organizationId: id, supabase })
   useAoManagementStore().REMOVE_ARCHIVED_AO_MANAGEMENT(id)
+}
+
+// ! PLEASE REMIND ME TO MAKE A CONFIRMATION BEFORE DELETING ORGANIZATION.
+const handleDeleteOrganization = async (id: number) => {
+  deleteArchivedOrganization({ organizationId: id, supabase })
 }
 
 </script>
@@ -130,7 +135,8 @@ const handleUnarchivedOrganization = async (id: number) => {
                     <EllipsisVerticalIcon class="h-5" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                    <DropdownMenuItem :onclick="() => handleDeleteOrganization(organization.organization_id)">Delete
+                    </DropdownMenuItem>
                     <DropdownMenuItem :onclick="() => handleUnarchivedOrganization(organization.organization_id)">
                       Restore
                     </DropdownMenuItem>
