@@ -79,16 +79,29 @@ const handleUnarchivedOrganization = async (id: number) => {
         </svg>
         <h1>Loading</h1>
       </div>
-      <NuxtLink to="/organizations/create" v-else-if="archived_ao_management_data?.length === 0"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
-        <Card
-          class="flex flex-col sm:flex-row justify-center items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-200 hover:border-white/50 text-white/75 hover:text-white/100">
-          <div class="flex flex-row gap-2 items-center">
-            <PlusCircleIcon />
-            <span class="text-sm">New Organization</span>
-          </div>
-        </Card>
-      </NuxtLink>
+      <div v-else-if="archived_ao_management_data?.length === 0 && !pending"
+        class="flex flex-col min-w-full gap-4 pt-8 justify-center items-center">
+        <div>
+          <!--?xml version="1.0" encoding="UTF-8"?-->
+          <svg class="invert dark:invert-0" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" width="130" height="130" viewBox="0 0 150 150" version="1.1">
+            <g id="surface1">
+              <path
+                style="fill: none; stroke-width: 0.25; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-miterlimit: 4;"
+                d="M 2 2 L 22 22 " transform="matrix(6.25,0,0,6.25,0,0)" class="no-archive-1"></path>
+              <path
+                style="fill: none; stroke-width: 0.25; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-miterlimit: 4;"
+                d="M 8.35 2.69 C 12.05 1.245 16.254375 2.126875 19.061875 4.93625 C 21.869375 7.74625 22.748125 11.95125 21.3 15.65 "
+                transform="matrix(6.25,0,0,6.25,0,0)" class="no-archive-2"></path>
+              <path
+                style="fill: none; stroke-width: 0.25; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-miterlimit: 4;"
+                d="M 19.08 19.08 C 15.17 22.99 8.83 22.99 4.92 19.08 C 1.01 15.17 1.01 8.83 4.92 4.92 "
+                transform="matrix(6.25,0,0,6.25,0,0)" class="no-archive-3"></path>
+            </g>
+          </svg>
+        </div>
+        <h1 class="pl-1">No archived organizations</h1>
+      </div>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
         <div v-for="organization in archived_ao_management_data" :key="organization.organization_id">
           <Card
@@ -117,8 +130,9 @@ const handleUnarchivedOrganization = async (id: number) => {
                     <EllipsisVerticalIcon class="h-5" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>Manage</DropdownMenuItem>
-                    <DropdownMenuItem :onclick="() => handleUnarchivedOrganization(organization.organization_id)">Delete
+                    <DropdownMenuItem>Delete</DropdownMenuItem>
+                    <DropdownMenuItem :onclick="() => handleUnarchivedOrganization(organization.organization_id)">
+                      Restore
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -174,5 +188,55 @@ const handleUnarchivedOrganization = async (id: number) => {
 .chrono-ledger-1 {
   -webkit-animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
   animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
+}
+
+/* no-archive animation */
+
+@keyframes animate-svg-stroke-2 {
+  0% {
+    stroke-dashoffset: 30.284271240234375px;
+    stroke-dasharray: 30.284271240234375px;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 30.284271240234375px;
+  }
+}
+
+.no-archive-1 {
+  animation: animate-svg-stroke-2 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s both;
+}
+
+@keyframes animate-svg-stroke-3 {
+  0% {
+    stroke-dashoffset: 25.16326904296875px;
+    stroke-dasharray: 25.16326904296875px;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 25.16326904296875px;
+  }
+}
+
+.no-archive-2 {
+  animation: animate-svg-stroke-3 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0.1s both;
+}
+
+@keyframes animate-svg-stroke-4 {
+  0% {
+    stroke-dashoffset: 33.459808349609375px;
+    stroke-dasharray: 33.459808349609375px;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+    stroke-dasharray: 33.459808349609375px;
+  }
+}
+
+.no-archive-3 {
+  animation: animate-svg-stroke-4 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0.2s both;
 }
 </style>

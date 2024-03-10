@@ -86,7 +86,7 @@ const handleArchiveOrganization = async (id: number) => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>Manage</DropdownMenuItem>
-                    <DropdownMenuItem :onclick="() => handleArchiveOrganization(organization.organization_id)">Delete
+                    <DropdownMenuItem :onclick="() => handleArchiveOrganization(organization.organization_id)">Archive
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
