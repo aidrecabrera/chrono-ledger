@@ -55,6 +55,8 @@ const onSubmit = form.handleSubmit((values) => {
   })
 })
 const agreementState = useState('agreementState', () => false)
+
+
 </script>
 <template>
   <div class="flex flex-col grow justify-center items-center gap-4">
