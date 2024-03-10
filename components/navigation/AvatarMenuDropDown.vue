@@ -74,13 +74,14 @@ const colorMode = useColorMode()
           <User class="mr-2 h-4 w-4" />
           <span>Profile</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Settings class="mr-2 h-4 w-4" />
-          <span>Settings</span>
-        </DropdownMenuItem>
+        <NuxtLink to="/settings" class="flex flex-row items-center w-full">
+          <DropdownMenuItem class="w-full">
+            <Settings class="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+        </NuxtLink>
       </DropdownMenuGroup>
       <DropdownMenuGroup>
-
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <UserPlus class="mr-2 h-4 w-4" />

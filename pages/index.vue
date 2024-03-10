@@ -15,52 +15,12 @@ definePageMeta({
 })
 
 // * All I need for Supabase communication
-import type { RealtimeChannel } from "@supabase/supabase-js"
-import { Skeleton } from '~/components/ui/skeleton';
-const supabase = useSupabaseClient();
+import { useAdminInformationStore } from '../composables/adminInformationStore';
+import { useAoManagementStore } from '../composables/aoManagementStore';
 
-// * NuxtApp for caching (IDK but it works!)
-const NuxtApp = useNuxtApp()
-// * Fetching ao_management data
-const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management', async () => {
-  const { data: ao_management } = await supabase
-    .from('ao_management')
-    .select(`
-      *,
-      organizations: organizations(*),
-      users: users(*)
-    `);
-  return ao_management as AoManagement[];
-}, {
-  lazy: true,
-  // * Caching the data
-  getCachedData: (key) => {
-    // * NuxtApp.payload.data is the data from SSR
-    // * If return nullish value -> this will refetch data
-    return NuxtApp.payload.data[key] || NuxtApp.static.data[key]
-  }
-});
-
-// * Realtime updates for ao_management data
-let aoManagementChannel: RealtimeChannel | null = null;
-onMounted(() => {
-  aoManagementChannel = supabase.channel('public:ao_management')
-    .on('postgres_changes',
-      { event: '*', schema: 'public', table: 'ao_management' },
-      (payload) => {
-        console.log('Realtime update:', payload);
-        refresh_ao_management_data();
-      }
-    )
-  aoManagementChannel.subscribe();
-});
-// * Unsubscribing when user is not on the page
-onUnmounted(() => {
-  if (aoManagementChannel) {
-    aoManagementChannel.unsubscribe();
-  }
-});
-
+// * Update this if the store changes please
+const ao_management_data = computed(() => useAoManagementStore().$state.ao_management);
+const pending = computed(() => useAoManagementStore().$state.pending);
 
 </script>
 
