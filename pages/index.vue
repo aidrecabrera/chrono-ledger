@@ -19,6 +19,8 @@ import type { RealtimeChannel } from "@supabase/supabase-js"
 import { Skeleton } from '~/components/ui/skeleton';
 const supabase = useSupabaseClient();
 
+// * NuxtApp for caching (IDK but it works!)
+const NuxtApp = useNuxtApp()
 // * Fetching ao_management data
 const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management', async () => {
   const { data: ao_management } = await supabase
@@ -30,7 +32,13 @@ const { data: ao_management_data, refresh: refresh_ao_management_data, pending }
     `);
   return ao_management as AoManagement[];
 }, {
-  lazy: true
+  lazy: true,
+  // * Caching the data
+  getCachedData: (key) => {
+    // * NuxtApp.payload.data is the data from SSR
+    // * If return nullish value -> this will refetch data
+    return NuxtApp.payload.data[key] || NuxtApp.static.data[key]
+  }
 });
 
 // * Realtime updates for ao_management data
