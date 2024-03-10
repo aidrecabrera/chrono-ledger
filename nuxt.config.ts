@@ -1,4 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+var siteName = "Rechrono";
+var delimiter = " | ";
+var description =
+  "Rechron redefines your time tracking system for any business size. Simplify hours worked with precision. Try now!";
+var url = "https://www.rechrono.so/"; // Replace 'yourwebsite.com' with your actual website URL
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -41,7 +46,119 @@ export default defineNuxtConfig({
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
-    layoutTransition: { name: 'layout', mode: 'out-in' }
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+    head: {
+      title: siteName,
+      htmlAttrs: {
+        lang: 'en'
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: siteName + delimiter + description
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          content: siteName
+        },
+        {
+          hid: 'og:url',
+          name: 'og:url',
+          content: url
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          content: url + '/favicons/fb-cover.jpg'
+        },
+        {
+          hid: 'og:type',
+          name: 'og:type',
+          content: 'website'
+        },
+        {
+          hid: 'og:site_name',
+          name: 'og:site_name',
+          content: siteName
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          content: description
+        },
+        {
+          hid: 'twitter:card',
+          name: 'twitter:card',
+          content: 'summary'
+        },
+        {
+          hid: 'twitter:creator',
+          name: 'twitter:creator',
+          content: '@yourtwitterhandle'
+        },
+        {
+          hid: 'twitter:url',
+          name: 'twitter:url',
+          content: url
+        },
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: siteName
+        },
+        {
+          hid: 'twitter:description',
+          name: 'twitter:description',
+          content: description
+        },
+        {
+          hid: 'twitter:image',
+          name: 'twitter:image',
+          content: url + '/favicons/fb-cover.jpg'
+        }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/cl.ico' },
+        {
+          rel: 'canonical',
+          href: url
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: ' 180x180',
+          href: '/favicons/apple-touch-icon.png'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: 'favicons/favicon-32x32.png'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          href: 'favicons/favicon-16x16.png'
+        },
+        {
+          rel: 'manifest',
+          href: 'favicons/site.webmanifest'
+        },
+        {
+          rel: 'mask-icon',
+          color: '#000000',
+          href: 'favicons/safari-pinned-tab.svg'
+        },
+        {
+          rel: 'shortcut icon',
+          href: 'favicons/favicon.ico'
+        }
+      ]
+    }
   },
   fonts: {
     families: [

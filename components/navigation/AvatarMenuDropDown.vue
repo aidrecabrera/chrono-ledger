@@ -105,10 +105,12 @@ const colorMode = useColorMode()
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>
-        <DropdownMenuItem>
-          <Plus class="mr-2 h-4 w-4" />
-          <span>New Team</span>
-        </DropdownMenuItem>
+        <NuxtLink to="/organizations/create" class="flex flex-row items-center w-full">
+          <DropdownMenuItem class="w-full">
+            <Plus class="mr-2 h-4 w-4" />
+            <span>New Team</span>
+          </DropdownMenuItem>
+        </NuxtLink>
         <DropdownMenuItem class="pr-0 -mr-0">
           <Select class="appearance-none bg-transparent shadow-none" v-model="colorMode.preference">
             <SelectTrigger class="outline-none border-0 h-5 appearance-none bg-transparent shadow-none">

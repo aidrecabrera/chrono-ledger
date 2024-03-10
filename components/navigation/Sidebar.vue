@@ -29,25 +29,31 @@
         </div>
       </CollapsibleContent>
     </Collapsible>
-    <Separator class="my-6" />
-    <div class="flex ml-4 pb-2 mb-2 text-md gap-4 items-center">
-      <Building2 />
-      <h1>
-        Organizations
-      </h1>
-    </div>
-    <div v-for="organization in ao_management_data" :key="organization.organization_id">
-      <NuxtLink class="flex flex-row items-center px-4 py-2 rounded-sm hover:bg-primary/10 gap-4">
-        <ChevronRight class="h-5" />
-        <span class="select-none text-sm">{{ organization.organizations.organization_name }}</span>
-      </NuxtLink>
-    </div>
+    <Collapsible v-model:open="isOpenOrganization">
+      <CollapsibleTrigger class="w-full">
+        <div class="flex ml-4 pb-2 mb-2 mt-2 text-md gap-4 items-center">
+          <Building2 />
+          <h1>
+            Organizations
+          </h1>
+          <ChevronRight
+            :class="`h-4 mt-1 ml-auto transition-all duration-200 ${isOpenOrganization ? 'transform rotate-90' : ''}`" />
+        </div>
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <div v-for="organization in ao_management_data" :key="organization.organization_id">
+          <NuxtLink class="flex flex-row items-center px-4 py-2 rounded-sm hover:bg-primary/10 gap-4">
+            <ChevronRight class="h-5" />
+            <span class="select-none text-sm">{{ organization.organizations.organization_name }}</span>
+          </NuxtLink>
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ArrowRight, Building2, ChevronRight, FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
-import Separator from '../ui/separator/Separator.vue';
+import { ArchiveIcon, ArrowRight, Building2, ChevronDown, ChevronRight, FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
 import { ref } from 'vue'
 import {
   Collapsible,
@@ -59,19 +65,21 @@ const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
   { name: 'Session', path: '/session', icon: Notebook },
   { name: 'Reports', path: '/reports', icon: FileBarChart2 },
+  { name: 'Archived', path: '/organizations/archived', icon: ArchiveIcon }
 ];
 const isOpen = ref(false)
-
 const router = useRouter();
 router.afterEach((to, from) => {
   if (!to.path.includes('/settings')) {
     isOpen.value = false;
   }
 });
+const isOpenOrganization = ref(true)
 
 // * All I need for Supabase communication
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import type { AoManagement } from '~/types/aoManagement.types';
+import { DotsHorizontalIcon } from '@radix-icons/vue';
 const supabase = useSupabaseClient();
 
 // * Fetching ao_management data
@@ -82,7 +90,8 @@ const { data: ao_management_data, refresh: refresh_ao_management_data, pending }
       *,
       organizations: organizations(*),
       users: users(*)
-    `);
+    `)
+    .eq('archived', false) // * New Update: It does not allow the user to see archived organizations
   return ao_management as AoManagement[];
 }, {
   lazy: true,

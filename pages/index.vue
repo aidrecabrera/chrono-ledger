@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CalendarCheck2, EyeIcon, PlusCircleIcon } from 'lucide-vue-next';
+import { CalendarCheck2, EllipsisVerticalIcon, EyeIcon, PlusCircleIcon } from 'lucide-vue-next';
 import type { AoManagement } from '~/types/aoManagement.types';
 
 // * Route Guard, preventing unauthorized access
@@ -17,13 +17,22 @@ definePageMeta({
 // * All I need for Supabase communication
 import { useAdminInformationStore } from '../composables/adminInformationStore';
 import { useAoManagementStore } from '../composables/aoManagementStore';
+import { archiveOrganization } from '~/services/organizationServices';
 
 // * Update this if the store changes please
 const ao_management_data = computed(() => useAoManagementStore().$state.ao_management);
 const pending = computed(() => useAoManagementStore().$state.pending);
 
-console.log(ao_management_data.value);
-
+const supabase = useSupabaseClient()
+const handleArchiveOrganization = async (id: number) => {
+  archiveOrganization({ organizationId: id, supabase: supabase })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
 </script>
 
 <template>
@@ -38,7 +47,7 @@ console.log(ao_management_data.value);
         </svg>
         <h1>Loading</h1>
       </div>
-      <div v-else-if="ao_management_data?.length === 0"
+      <NuxtLink to="/organizations/create" v-else-if="ao_management_data?.length === 0"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
         <Card
           class="flex flex-col sm:flex-row justify-center items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-200 hover:border-white/50 text-white/75 hover:text-white/100">
@@ -47,7 +56,7 @@ console.log(ao_management_data.value);
             <span class="text-sm">New Organization</span>
           </div>
         </Card>
-      </div>
+      </NuxtLink>
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
         <div v-for="organization in ao_management_data" :key="organization.organization_id">
           <Card
@@ -62,7 +71,7 @@ console.log(ao_management_data.value);
                 <CardDescription>{{ organization.organizations.city }} City, {{ organization.organizations.country }}
                 </CardDescription>
               </CardHeader>
-              <CardContent class="flex flex-row gap-2 w-full">
+              <CardContent class="flex flex-row items-center gap-2 w-full">
                 <Button size="sm" class="w-full">
                   <EyeIcon class="w-4 h-4" />
                   <span class="ml-2">View</span>
@@ -71,6 +80,16 @@ console.log(ao_management_data.value);
                   <CalendarCheck2 class="w-4 h-4" />
                   <span class="ml-2">Track</span>
                 </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <EllipsisVerticalIcon class="h-5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>Manage</DropdownMenuItem>
+                    <DropdownMenuItem :onclick="() => handleArchiveOrganization(organization.organization_id)">Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </CardContent>
             </div>
           </Card>
