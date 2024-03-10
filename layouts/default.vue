@@ -16,7 +16,7 @@ const logout = async () => {
       <NavigationAvatarMenuDropDown :logout="logout" />
     </div>
     <div class="flex flex-row">
-      <div class="border-r w-[300px] min-h-[93vh]">
+      <div class="border-r w-[350px] min-h-[93vh]">
         <NavigationSidebar />
       </div>
       <div class="w-10/12">

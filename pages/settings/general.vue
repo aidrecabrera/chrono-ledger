@@ -104,7 +104,6 @@ import { Card, NuxtImg, Input, Separator } from '../../.nuxt/components';
 
 </template>
 <script lang="ts" setup>
-import ScrollArea from '~/components/ui/scroll-area/ScrollArea.vue';
 
 const profileInformation = useAdminInformationStore()
 const profile = {

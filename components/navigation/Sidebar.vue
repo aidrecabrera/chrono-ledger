@@ -29,13 +29,24 @@
         </div>
       </CollapsibleContent>
     </Collapsible>
-    <Separator class="mt-6" />
-
+    <Separator class="my-6" />
+    <div class="flex ml-4 pb-2 mb-2 text-md gap-4 items-center">
+      <Building2 />
+      <h1>
+        Organizations
+      </h1>
+    </div>
+    <div v-for="organization in ao_management_data" :key="organization.organization_id">
+      <NuxtLink class="flex flex-row items-center px-4 py-2 rounded-sm hover:bg-primary/10 gap-4">
+        <ChevronRight class="h-5" />
+        <span class="select-none text-sm">{{ organization.organizations.organization_name }}</span>
+      </NuxtLink>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
+import { ArrowRight, Building2, ChevronRight, FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
 import Separator from '../ui/separator/Separator.vue';
 import { ref } from 'vue'
 import {
@@ -55,6 +66,53 @@ const router = useRouter();
 router.afterEach((to, from) => {
   if (!to.path.includes('/settings')) {
     isOpen.value = false;
+  }
+});
+
+// * All I need for Supabase communication
+import type { RealtimeChannel } from "@supabase/supabase-js"
+import type { AoManagement } from '~/types/aoManagement.types';
+const supabase = useSupabaseClient();
+
+// * NuxtApp for caching (IDK but it works!)
+const NuxtApp = useNuxtApp()
+// * Fetching ao_management data
+const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management', async () => {
+  const { data: ao_management } = await supabase
+    .from('ao_management')
+    .select(`
+      *,
+      organizations: organizations(*),
+      users: users(*)
+    `);
+  return ao_management as AoManagement[];
+}, {
+  lazy: true,
+  // * Caching the data
+  getCachedData: (key) => {
+    // * NuxtApp.payload.data is the data from SSR
+    // * If return nullish value -> this will refetch data
+    return NuxtApp.payload.data[key] || NuxtApp.static.data[key]
+  }
+});
+
+// * Realtime updates for ao_management data
+let aoManagementChannel: RealtimeChannel | null = null;
+onMounted(() => {
+  aoManagementChannel = supabase.channel('public:ao_management')
+    .on('postgres_changes',
+      { event: '*', schema: 'public', table: 'ao_management' },
+      (payload) => {
+        console.log('Realtime update:', payload);
+        refresh_ao_management_data();
+      }
+    )
+  aoManagementChannel.subscribe();
+});
+// * Unsubscribing when user is not on the page
+onUnmounted(() => {
+  if (aoManagementChannel) {
+    aoManagementChannel.unsubscribe();
   }
 });
 </script>
