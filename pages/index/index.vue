@@ -1,10 +1,11 @@
+import { DashboardMember } from '#build/components';
 <template>
   <div>
     <div v-if="false">
       <DashboardAdmin />
     </div>
     <div else>
-      Member Dashboard
+      <DashboardMember />
     </div>
   </div>
 </template>
