@@ -18,7 +18,6 @@ useMoAssociationStore().$patch({
   mo_association: mo_association_data.value,
   pending: pending
 })
-
 </script>
 
 <template>

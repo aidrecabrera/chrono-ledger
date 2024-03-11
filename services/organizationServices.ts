@@ -62,7 +62,9 @@ export const deleteArchivedOrganization = async ({
     .from("organizations")
     .delete()
     .eq("organization_id", organizationId);
-  if (error) throw error;
+  if (error) {
+    throw error;
+  }
 };
 
 export const getAoManagementData = async () => {

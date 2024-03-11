@@ -5,7 +5,6 @@ import {
 
 export default defineNuxtRouteMiddleware(async () => {
   const client = useSupabaseClient();
-  const user = useSupabaseUser();
   let realtimeChannel: RealtimeChannel | null = null;
   const realtimeStore = useRealtimeChannelStore();
   realtimeChannel = client

@@ -23,7 +23,9 @@ const handleUnarchivedOrganization = async (id: number) => {
 }
 // ! PLEASE REMIND ME TO MAKE A CONFIRMATION BEFORE DELETING ORGANIZATION.
 const handleDeleteOrganization = async (id: number) => {
-  deleteArchivedOrganization({ organizationId: id, supabase })
+  deleteArchivedOrganization({ organizationId: id, supabase }).catch(error => {
+    console.log(error);
+  })
 }
 
 const isLoading = () => {
