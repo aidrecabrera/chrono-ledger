@@ -59,6 +59,11 @@ export default defineNuxtConfig({
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         {
+          hid: "google-site-verification",
+          name: "google-site-verification",
+          content: "hWA_mn-dUQFDXed6aAkqN0EjEl5bgc0nGsdGnMB5GFk",
+        },
+        {
           hid: "description",
           name: "description",
           content: siteName + delimiter + description,
