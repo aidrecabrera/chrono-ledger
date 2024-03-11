@@ -29,4 +29,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
     // ! <-- Only necessary because register is a dead route.
     return navigateTo("/register/member");
   }
+  if (!user.value) {
+    return navigateTo("/login");
+  }
 });
