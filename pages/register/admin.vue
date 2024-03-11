@@ -46,9 +46,9 @@ const onSubmit = form.handleSubmit((values) => {
     supabase: supabase
   }).catch((error) => {
     form.setErrors({ email: error.message })
-  }).finally {
+  }).finally(() => {
     navigateTo('/')
-  }
+  })
 })
 const agreementState = useState('agreementState', () => false)
 
