@@ -1,10 +1,9 @@
-import { DashboardMember } from '#build/components';
 <template>
   <div>
-    <div v-if="false">
+    <div v-if="useAdminInformationStore().$state.information?.admin">
       <DashboardAdmin />
     </div>
-    <div else>
+    <div v-else>
       <DashboardMember />
     </div>
   </div>

@@ -55,6 +55,7 @@
 <script lang="ts" setup>
 import { ArchiveIcon, Building2, ChevronRight, FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
 import { ref } from 'vue'
+import { useRealtimeChannelStore } from '../../composables/realtimeChannelStore';
 import {
   Collapsible,
   CollapsibleContent,
@@ -69,63 +70,24 @@ const navItems = [
 ];
 const isOpen = ref(false)
 const router = useRouter();
-router.afterEach((to, from) => {
+router.afterEach((to) => {
   if (!to.path.includes('/settings')) {
     isOpen.value = false;
   }
 });
 const isOpenOrganization = ref(true)
 
-// * All I need for Supabase communication
-import type { RealtimeChannel } from "@supabase/supabase-js"
-import type { AoManagement } from '~/types/aoManagement.types';
-
-const supabase = useSupabaseClient();
-// * Fetching ao_management data
-const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management_get', async () => {
-  const { data: ao_management } = await supabase
-    .from('ao_management')
-    .select(`
-      *,
-      organizations: organizations(*),
-      users: users(*)
-    `)
-    .eq('archived', false) // * New Update: It does not allow the user to see archived organizations
-  return ao_management as AoManagement[];
+const aoManagementStore = useAoManagementStore();
+const realtimeChannelStore = useRealtimeChannelStore();
+onMounted(() => {
+  if (ao_management_data !== null) {
+    aoManagementStore.fetchData();
+  }
+})
+const ao_management_data = computed(() => aoManagementStore.$state.ao_management);
+realtimeChannelStore.$subscribe((_, state) => {
+  if (state.payload?.table === 'ao_management') {
+    aoManagementStore.fetchData();
+  }
 });
-
-if (ao_management_data.value) {
-  useAoManagementStore().$patch({
-    ao_management: ao_management_data.value,
-    pending: pending
-  });
-}
-
-// * Realtime updates for ao_management data
-let aoManagementChannel: RealtimeChannel | null = null;
-aoManagementChannel = supabase.channel('public:ao_management')
-  .on('postgres_changes',
-    { event: '*', schema: 'public', table: 'ao_management' },
-    (payload) => {
-      console.log('Realtime update:', payload);
-      refresh_ao_management_data();
-    }
-  )
-aoManagementChannel.subscribe();
-// * Unsubscribing when user is not on the page
-if (!useAdminInformationStore().$state.information) {
-  aoManagementChannel.unsubscribe();
-}
-
-// * Watch for changes in ao_management and pending state
-watch([ao_management_data, pending], ([newAoManagementData, newPending]) => {
-  useAoManagementStore().$patch({
-    ao_management: newAoManagementData,
-    pending: newPending
-  });
-});
-
-useAoManagementStore().$subscribe((mutation) => {
-  if ('payload' in mutation && 'archived_ao_management' in mutation.payload) refresh_ao_management_data()
-}) 
 </script>
