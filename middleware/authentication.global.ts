@@ -23,7 +23,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
         }
         return; // * <-- Do nothing!
     }
-    if (to.name === 'register') {
+    if (to.name === 'register') { // ! <-- Only necessary because register is a dead route.
         return navigateTo('/register/member')
     }
 })

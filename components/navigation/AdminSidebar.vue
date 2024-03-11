@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ArchiveIcon, ArrowRight, Building2, ChevronDown, ChevronRight, FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
+import { ArchiveIcon, Building2, ChevronRight, FileBarChart2, LayoutDashboard, Notebook, Settings } from 'lucide-vue-next';
 import { ref } from 'vue'
 import {
   Collapsible,
@@ -82,7 +82,7 @@ import type { AoManagement } from '~/types/aoManagement.types';
 
 const supabase = useSupabaseClient();
 // * Fetching ao_management data
-const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management', async () => {
+const { data: ao_management_data, refresh: refresh_ao_management_data, pending }: { data: Ref<AoManagement[] | null>, refresh: () => void, pending: any } = await useAsyncData('ao_management_get', async () => {
   const { data: ao_management } = await supabase
     .from('ao_management')
     .select(`
@@ -92,9 +92,14 @@ const { data: ao_management_data, refresh: refresh_ao_management_data, pending }
     `)
     .eq('archived', false) // * New Update: It does not allow the user to see archived organizations
   return ao_management as AoManagement[];
-}, {
-  lazy: true,
 });
+
+if (ao_management_data.value) {
+  useAoManagementStore().$patch({
+    ao_management: ao_management_data.value,
+    pending: pending
+  });
+}
 
 // * Realtime updates for ao_management data
 let aoManagementChannel: RealtimeChannel | null = null;
@@ -111,6 +116,7 @@ aoManagementChannel.subscribe();
 if (!useAdminInformationStore().$state.information) {
   aoManagementChannel.unsubscribe();
 }
+
 // * Watch for changes in ao_management and pending state
 watch([ao_management_data, pending], ([newAoManagementData, newPending]) => {
   useAoManagementStore().$patch({
@@ -121,6 +127,5 @@ watch([ao_management_data, pending], ([newAoManagementData, newPending]) => {
 
 useAoManagementStore().$subscribe((mutation) => {
   if ('payload' in mutation && 'archived_ao_management' in mutation.payload) refresh_ao_management_data()
-})
-
+}) 
 </script>

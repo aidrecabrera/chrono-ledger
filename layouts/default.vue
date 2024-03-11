@@ -8,6 +8,8 @@ const logout = async () => {
   useAoManagementStore().RESET()
   navigateTo('/login')
 }
+const adminInfo = useAdminInformationStore().$state.information?.admin
+
 </script>
 
 <template>
@@ -18,7 +20,8 @@ const logout = async () => {
     </div>
     <div class="flex flex-row">
       <div class="border-r w-[350px] min-h-[93vh]">
-        <NavigationSidebar />
+        <NavigationAdminSidebar v-if="adminInfo" />
+        <NavigationMemberSidebar v-else />
       </div>
       <div class="w-10/12">
         <ScrollArea class="min-w-screen grow max-h-screen">
