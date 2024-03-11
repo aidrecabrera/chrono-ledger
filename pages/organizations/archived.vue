@@ -2,18 +2,6 @@
 import { CalendarCheck2, EllipsisVerticalIcon, EyeIcon, PlusCircleIcon } from 'lucide-vue-next';
 import type { AoManagement } from '~/types/aoManagement.types';
 
-// * Route Guard, preventing unauthorized access
-const user = useSupabaseUser()
-watchEffect(() => {
-  if (!user.value) {
-    navigateTo('/login')
-    useAdminInformationStore().$reset
-  }
-})
-definePageMeta({
-  middleware: 'authentication'
-})
-
 // * All I need for Supabase communication
 import type { RealtimeChannel } from "@supabase/supabase-js"
 import { deleteArchivedOrganization, unarchiveOrganization } from '~/services/organizationServices';

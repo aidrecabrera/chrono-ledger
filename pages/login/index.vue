@@ -28,14 +28,6 @@ const onSubmit = form.handleSubmit((values) => {
     form.setErrors({ password: error.message })
   })
 })
-
-// * Redirect user to home page if they are already logged in
-const user = useSupabaseUser()
-watchEffect(() => {
-  if (user.value) {
-    navigateTo('/')
-  }
-})
 </script>
 
 <template>

@@ -13,14 +13,6 @@ definePageMeta({
   layout: 'noauth'
 })
 
-// * Redirect user to home page if they are already logged in
-const user = useSupabaseUser()
-watchEffect(() => {
-  if (user.value) {
-    navigateTo('/')
-  }
-})
-
 // * Register Schema
 const registerFormSchema = toTypedSchema(z.object({
   firstName: z.string().min(2),
@@ -43,13 +35,13 @@ const form = useForm({
 const supabase = useSupabaseClient()
 // * Register User with Email and Password
 const onSubmit = form.handleSubmit((values) => {
-  signUpNewAdminUser({
+  signUpNewMemberUser({
     email: values.email,
     password: values.password,
     first_name: values.firstName,
     last_name: values.lastName,
     username: values.username,
-    role: "Admin",
+    role: "Member",
     contact: "09604377530",
     supabase: supabase
   }).catch((error) => {
@@ -65,7 +57,7 @@ const agreementState = useState('agreementState', () => false)
     <ChronoLogo />
     <form @submit="onSubmit">
       <Card class="flex flex-col items-center justify-center gap-4 px-20 py-12 w-[500px] min-h-[517px]">
-        <h1 class="text-2xl">Get Started</h1>
+        <h1 class="text-2xl">Member Sign Up</h1>
         <div class="flex flex-row gap-2">
           <FormField v-slot="{ componentField }" name="firstName">
             <FormItem class="w-full">
@@ -124,7 +116,7 @@ const agreementState = useState('agreementState', () => false)
         <Button :disabled="!agreementState" class="w-full">
           Sign Up
         </Button>
-        <p class="text-sm text-gray-500">Already have an account? <NuxtLink to="/login" class="underline font-medium">
+        <p class="text-sm text-gray-500">Already a member? <NuxtLink to="/login" class="underline font-medium">
             Log In</NuxtLink>
         </p>
       </Card>

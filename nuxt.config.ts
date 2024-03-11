@@ -44,11 +44,7 @@ export default defineNuxtConfig({
     classSuffix: ''
   },
   supabase: {
-    redirectOptions: {
-      login: '/login',
-      callback: '/',
-      exclude: ['/register']
-    }
+    redirect: false
   },
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
@@ -149,10 +145,6 @@ export default defineNuxtConfig({
           type: 'image/png',
           sizes: '16x16',
           href: 'favicons/favicon-16x16.png'
-        },
-        {
-          rel: 'manifest',
-          href: 'favicons/site.webmanifest'
         },
         {
           rel: 'mask-icon',

@@ -10,13 +10,11 @@ watchEffect(() => {
     useAdminInformationStore().$reset
   }
 })
-definePageMeta({
-  middleware: 'authentication'
-})
+
 
 // * All I need for Supabase communication
-import { useAdminInformationStore } from '../composables/adminInformationStore';
-import { useAoManagementStore } from '../composables/aoManagementStore';
+import { useAdminInformationStore } from '../../composables/adminInformationStore';
+import { useAoManagementStore } from '../../composables/aoManagementStore';
 import { archiveOrganization } from '~/services/organizationServices';
 
 // * Update this if the store changes
@@ -143,4 +141,4 @@ const handleArchiveOrganization = async (id: number) => {
   -webkit-animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
   animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
 }
-</style>
+</style>../../composables/adminInformationStore../../composables/aoManagementStore

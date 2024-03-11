@@ -4,8 +4,8 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 definePageMeta({
-  layout: 'member-layout'
+  layout: 'default'
 })
 </script>
