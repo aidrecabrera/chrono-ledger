@@ -3,13 +3,16 @@ export interface AdminInterface {
 }
 
 export interface AdminProfileInfo {
-  email: string
-  email_verified: boolean
-  first_name: string
-  last_name: string
-  phone_verified: boolean
-  sub: string
-  username: string
+  admin:          boolean;
+  sub:            string;
+  username:       string;
+  email:          string;
+  email_verified: boolean;
+  contact:        string;
+  first_name:     string;
+  last_name:      string;
+  phone_verified: boolean;
+  role:           string;
 }
 
 export const useAdminInformationStore = defineStore('adminInformation', {

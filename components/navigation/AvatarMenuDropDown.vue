@@ -108,7 +108,7 @@ const colorMode = useColorMode()
         <NuxtLink to="/organizations/create" class="flex flex-row items-center w-full">
           <DropdownMenuItem class="w-full">
             <Plus class="mr-2 h-4 w-4" />
-            <span>New Team</span>
+            <span>New Organization</span>
           </DropdownMenuItem>
         </NuxtLink>
         <DropdownMenuItem class="pr-0 -mr-0">

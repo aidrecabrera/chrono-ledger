@@ -7,7 +7,7 @@ import {
   FormItem,
 } from '@/components/ui/form'
 import { useForm } from 'vee-validate';
-import { signUpNewUser } from '~/services/authServices';
+import { signUpNewAdminUser, signUpNewMemberUser } from '~/services/authServices';
 
 definePageMeta({
   layout: 'noauth'
@@ -43,12 +43,14 @@ const form = useForm({
 const supabase = useSupabaseClient()
 // * Register User with Email and Password
 const onSubmit = form.handleSubmit((values) => {
-  signUpNewUser({
+  signUpNewAdminUser({
     email: values.email,
     password: values.password,
     first_name: values.firstName,
     last_name: values.lastName,
     username: values.username,
+    role: "Admin",
+    contact: "09604377530",
     supabase: supabase
   }).catch((error) => {
     form.setErrors({ email: error.message })
