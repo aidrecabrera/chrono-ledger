@@ -3,7 +3,7 @@ var siteName = "Rechrono";
 var delimiter = " | ";
 var description =
   "Rechron redefines your time tracking system for any business size. Simplify hours worked with precision. Try now!";
-var url = "https://www.rechrono.so/"; // Replace 'yourwebsite.com' with your actual website URL
+var url = "https://rechron.vercel.app/"; // Replace 'yourwebsite.com' with your actual website URL
 
 export default defineNuxtConfig({
   devtools: {
@@ -76,7 +76,8 @@ export default defineNuxtConfig({
         {
           hid: "og:image",
           name: "og:image",
-          content: url + "/favicons/fb-cover.jpg",
+          content:
+            "https://images.squarespace-cdn.com/content/v1/5e949a92e17d55230cd1d44f/ca7a4e4c-f254-42b4-a69e-3925af5547dd/Autumn+Gradients1x1.png?format=1000w",
         },
         {
           hid: "og:type",
@@ -101,7 +102,7 @@ export default defineNuxtConfig({
         {
           hid: "twitter:creator",
           name: "twitter:creator",
-          content: "@yourtwitterhandle",
+          content: "@aidrecabrera",
         },
         {
           hid: "twitter:url",
@@ -121,7 +122,8 @@ export default defineNuxtConfig({
         {
           hid: "twitter:image",
           name: "twitter:image",
-          content: url + "/favicons/fb-cover.jpg",
+          content:
+            "https://images.squarespace-cdn.com/content/v1/5e949a92e17d55230cd1d44f/ca7a4e4c-f254-42b4-a69e-3925af5547dd/Autumn+Gradients1x1.png?format=1000w",
         },
       ],
       link: [
