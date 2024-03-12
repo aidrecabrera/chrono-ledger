@@ -14,10 +14,4 @@ export const useMoAssociationStore = defineStore("moAssociation", {
 		mo_association: null,
 		pending: true,
 	}),
-	actions: {
-		RESET() {
-			this.mo_association = null;
-			this.pending = true;
-		},
-	},
 });

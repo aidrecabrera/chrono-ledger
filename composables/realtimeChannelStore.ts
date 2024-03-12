@@ -31,9 +31,5 @@ export const useRealtimeChannelStore = defineStore("realtimeChannelStore", {
 			this.newUpdates = true;
 			this.payload = payload;
 		},
-		reset() {
-			this.newUpdates = false;
-			this.payload = null;
-		},
 	},
 });

@@ -56,7 +56,7 @@ useMoAssociationStore().$patch({
 							</CardDescription>
 						</CardHeader>
 						<CardContent class="flex flex-row items-center gap-2 w-full">
-							<Button size="sm" class="w-full">
+							<Button size="sm" class="w-full" :onclick="() => navigateTo('/organizations/view/' + organization.organization_id)">
 								<EyeIcon class="w-4 h-4" />
 								<span class="ml-2">View</span>
 							</Button>

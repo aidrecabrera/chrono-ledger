@@ -44,11 +44,6 @@ export const useAoManagementStore = defineStore("aoManagement", {
 					this.pending = false;
 				});
 		},
-		reset() {
-			this.ao_management = null;
-			this.archived_ao_management = null;
-			this.pending = true;
-		},
 		remove_ao_management(aoId: number) {
 			// Delete an AO given their ID
 			if (this.ao_management) {

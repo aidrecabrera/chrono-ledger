@@ -5,10 +5,10 @@ import {
 	EyeIcon,
 	PlusCircleIcon,
 } from "lucide-vue-next";
+import { computed, watchEffect } from "vue";
+import { archiveOrganization } from "~/services/organizationServices";
 import { useAdminInformationStore } from "../../composables/adminInformationStore";
 import { useAoManagementStore } from "../../composables/aoManagementStore";
-import { archiveOrganization } from "~/services/organizationServices";
-import { watchEffect, computed } from "vue";
 
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
@@ -84,7 +84,7 @@ const handleArchiveOrganization = async (id: number) => {
 							</CardDescription>
 						</CardHeader>
 						<CardContent class="flex flex-row items-center gap-2 w-full">
-							<Button size="sm" class="w-full">
+							<Button size="sm" class="w-full" :onclick="() => navigateTo('/organizations/view/' + organization.organization_id)">
 								<EyeIcon class="w-4 h-4" />
 								<span class="ml-2">View</span>
 							</Button>

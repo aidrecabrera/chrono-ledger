@@ -19,9 +19,4 @@ export const useAdminInformationStore = defineStore("adminInformation", {
 	state: (): AdminInterface => ({
 		information: null,
 	}),
-	actions: {
-		reset() {
-			this.information = null;
-		},
-	},
 });

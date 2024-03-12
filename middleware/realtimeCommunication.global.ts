@@ -29,8 +29,9 @@ export default defineNuxtRouteMiddleware(async () => {
 				const { data } = await client.auth.getSession();
 				if (!data.session) {
 					await client.auth.signOut();
-					useAoManagementStore().reset();
-					useMoAssociationStore().RESET();
+					useAoManagementStore().$reset();
+					useMoAssociationStore().$reset();
+					useOrganizationDetailStore().$reset();
 					navigateTo("/login");
 				}
 			}
