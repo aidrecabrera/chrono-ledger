@@ -71,6 +71,7 @@ const data = computed(
 - `computed` : Vue Composition API function that creates a reactive computed property.
 - `data` : Computed property that returns the desired data from `storeA` .
 #### Subscribe to Realtime Updates
+
 ```javascript
 storeB.$subscribe((_, state) => {
     if (state.payload?.table === "target_table") {
@@ -82,7 +83,7 @@ storeB.$subscribe((_, state) => {
 - The callback function checks if the payload table matches the target table and triggers fetching data from `storeA`  accordingly.
 Example Implementation in the Codebase
 
-```
+```javascript
 const aoManagementStore = useAoManagementStore();
 const realtimeChannelStore = useRealtimeChannelStore();
 
