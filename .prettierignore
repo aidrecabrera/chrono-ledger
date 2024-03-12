@@ -1,0 +1,7 @@
+# Don't format these
+build
+coverage
+.nuxt
+.vscode
+.output
+node_modules

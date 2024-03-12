@@ -7,7 +7,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "generate-types": "node -r dotenv/config -e \"const url = process.env.SUPABASE_URL; const projectId = url.split('//')[1].split('.')[0]; require('child_process').execSync(`pnpx supabase gen types typescript --project-id ${projectId} --schema public > types/supabase.ts`);\""
   },
   "dependencies": {
     "@nuxt/image": "^1.4.0",
@@ -22,6 +23,7 @@
     "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dotenv": "^16.4.5",
     "i18n-iso-countries": "^7.10.1",
     "lucide-vue-next": "^0.353.0",
     "nuxt": "^3.10.3",
@@ -40,6 +42,7 @@
     "@nuxt/fonts": "^0.0.2",
     "@nuxtjs/supabase": "^1.1.7",
     "@nuxtjs/tailwindcss": "^6.11.4",
+    "prettier": "3.2.5",
     "shadcn-nuxt": "^0.10.0",
     "typescript": "^5.4.2"
   }
