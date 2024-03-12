@@ -1,214 +1,303 @@
 <script lang="ts" setup>
-import { CalendarCheck2, EllipsisVerticalIcon, EyeIcon, PlusCircleIcon } from 'lucide-vue-next';
-import { deleteArchivedOrganization, unarchiveOrganization } from '~/services/organizationServices';
+import {
+	CalendarCheck2,
+	EllipsisVerticalIcon,
+	EyeIcon,
+	PlusCircleIcon,
+} from "lucide-vue-next";
+import {
+	deleteArchivedOrganization,
+	unarchiveOrganization,
+} from "~/services/organizationServices";
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient();
 const aoManagementStore = useAoManagementStore();
 const realtimeChannelStore = useRealtimeChannelStore();
 onMounted(() => {
-  if (archived_ao_management_data !== null) {
-    aoManagementStore.fetchArchivedData()
-  }
-})
-const archived_ao_management_data = computed(() => aoManagementStore.$state.archived_ao_management);
+	if (archived_ao_management_data !== null) {
+		aoManagementStore.fetchArchivedData();
+	}
+});
+const archived_ao_management_data = computed(
+	() => aoManagementStore.$state.archived_ao_management
+);
 const pending = computed(() => aoManagementStore.$state.pending);
 realtimeChannelStore.$subscribe((_, state) => {
-  if (state.payload?.table === 'ao_management') {
-    aoManagementStore.fetchArchivedData()
-  }
+	if (state.payload?.table === "ao_management") {
+		aoManagementStore.fetchArchivedData();
+	}
 });
 const handleUnarchivedOrganization = async (id: number) => {
-  unarchiveOrganization({ organizationId: id, supabase })
-  useAoManagementStore().remove_archived_ao_management(id)
-}
+	unarchiveOrganization({ organizationId: id, supabase });
+	useAoManagementStore().remove_archived_ao_management(id);
+};
 // ! PLEASE REMIND ME TO MAKE A CONFIRMATION BEFORE DELETING ORGANIZATION.
 const handleDeleteOrganization = async (id: number) => {
-  deleteArchivedOrganization({ organizationId: id, supabase }).catch(error => {
-    console.log(error);
-  })
-}
+	deleteArchivedOrganization({ organizationId: id, supabase }).catch(
+		(error) => {
+			console.log(error);
+		}
+	);
+};
 
 const isLoading = () => {
-  return pending.value;
-}
+	return pending.value;
+};
 const isDataEmpty = () => {
-  return !pending.value && archived_ao_management_data?.value?.length === 0;
-}
-
+	return !pending.value && archived_ao_management_data?.value?.length === 0;
+};
 </script>
 
 <template>
-  <div class="p-8">
-    <Transition mode="out-in" name="fade">
-      <div v-if="isLoading()" class="flex flex-col min-w-full gap-2 pt-8 justify-center items-center">
-        <svg class="invert dark:invert-0" width="86" height="130" viewBox="0 0 86 130" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M16.6249 128.998V72.5755C21.0038 82.6237 31.0725 89.4663 42.3677 89.4663C58.1482 89.4663 70.6912 76.3627 70.6912 60.6571V60.6515V60.6458V60.6402V60.6345V60.6289V60.6233V60.6177V60.6121V60.6065V60.6009V60.5953V60.5898V60.5842V60.5786V60.5731V60.5676V60.562V60.5565V60.551V60.5455V60.54V60.5345V60.529V60.5235V60.518V60.5125V60.5071V60.5016V60.4961V60.4907V60.4853V60.4798V60.4744V60.469V60.4636V60.4582V60.4528V60.4474V60.442V60.4366V60.4313V60.4259V60.4206V60.4152V60.4099V60.4045V60.3992V60.3939V60.3886V60.3833V60.378V60.3727V60.3674V60.3621V60.3568V60.3516V60.3463V60.341V60.3358V60.3305V60.3253V60.3201V60.3149V60.3096V60.3044V60.2992V60.294V60.2888V60.2837V60.2785V60.2733V60.2681V60.263V60.2578V60.2527V60.2475V60.2424V60.2373V60.2322V60.227V60.2219V60.2168V60.2117V60.2066V60.2016V60.1965V60.1914V60.1863V60.1813V60.1762V60.1712V60.1661V60.1611V60.1561V60.1511V60.146V60.141V60.136V60.131V60.126V60.121V60.1161V60.1111V60.1061V60.1012V60.0962V60.0912V60.0863V60.0814V60.0764V60.0715V60.0666V60.0616V60.0567V60.0518V60.0469V60.042V60.0371V60.0323V60.0274V60.0225V60.0177V60.0128V60.0079V60.0031V59.9982V59.9934V59.9886V59.9837V59.9789V59.9741V59.9693V59.9645V59.9597V59.9549V59.9501V59.9453V59.9405V59.9358V59.931V59.9262V59.9215V59.9167V59.912V59.9072V59.9025V59.8978V59.893V59.8883V59.8836V59.8789V59.8742V59.8695V59.8648V59.8601V59.8554V59.8508V59.8461V59.8414V59.8368V59.8321V59.8274V59.8228V59.8181V59.8135V59.8089V59.8042V59.7996V59.795V59.7904V59.7858V59.7812V59.7766V59.772V59.7674V59.7628V59.7582V59.7537V59.7491V59.7445V59.74V59.7354V59.7309V59.7263V59.7218V59.7172V59.7127V59.7082V59.7037V59.6991V59.6946V59.6901V59.6856V59.6811V59.6766V59.6721V59.6676V59.6632V59.6587V59.6542V59.6497V59.6453V59.6408V59.6364V59.6319V59.6275V59.623V59.6186V59.6142V59.6097V59.6053V59.6009V59.5965V59.5921V59.5877V59.5833V59.5789V59.5745V59.5701V59.5657V59.5613V59.5569V59.5526V59.5482V59.5438V59.5395V59.5351V59.5308V59.5264V59.5221V59.5177V59.5134V59.5091V59.5047V59.5004V59.4961V59.4918V59.4875V59.4832V59.4789V59.4746V59.4703V59.466V59.4617V59.4574V59.4531V59.4488V59.4446V59.4403V59.436V59.4318V59.4275V59.4233V59.419V59.4148V59.4105V59.4063V59.402V59.3978V59.3936V59.3894V59.3851V59.3809V59.3767V59.3725V59.3683V59.3641V59.3599V59.3557V59.3515V59.3473V59.3431V59.3389V59.3348V59.3306V59.3264V59.3222V59.3181V59.3139V59.3098V59.3056V59.3014V59.2973V59.2932V59.289V59.2849V59.2807V59.2766V59.2725V59.2683V59.2642V59.2601V59.256V59.2519V59.2478V59.2437V59.2396V59.2355V59.2314V59.2273V59.2232V59.2191V59.215V59.2109V59.2068V59.2028V59.1987V59.1946V59.1905V59.1865V59.1824V59.1784V59.1743V59.1702V59.1662V59.1622V59.1581V59.1541V59.15V59.146V59.142V59.1379V59.1339V59.1299V59.1259V59.1218V59.1178V59.1138V59.1098V59.1058V59.1018V59.0978V59.0938V59.0898V59.0858V59.0818V59.0778V59.0738V59.0698V59.0658V59.0618V59.0579V59.0539V59.0499V59.0459V59.042V59.038V59.034V59.0301V59.0261V59.0222V59.0182V59.0143V59.0103V59.0064V59.0024V58.9985V58.9945V58.9906V58.9866V58.9827V58.9788V58.9748V58.9709V58.967V58.9631V58.9591V58.9552V58.9513V58.9474V58.9435V58.9396V58.9357V58.9317V58.9278V58.9239V58.92V58.9161V58.9122V58.9083V58.9052H85.4983C85.235 97.4846 54.5209 128.726 16.6249 128.998ZM69.6793 56.2245C64.8118 47.1722 55.3983 41.1771 44.5808 41.1771C28.8003 41.1771 16.2573 54.2807 16.2573 69.9863V69.9901V69.9938V69.9976V70.0013V70.0051V70.0088V70.0125V70.0162V70.0199V70.0236V70.0273V70.031V70.0347V70.0384V70.042V70.0457V70.0493V70.053V70.0566V70.0603V70.0639V70.0675V70.0711V70.0747V70.0783V70.0819V70.0855V70.0891V70.0926V70.0962V70.0998V70.1033V70.1069V70.1104V70.1139V70.1175V70.121V70.1245V70.128V70.1315V70.135V70.1385V70.142V70.1455V70.1489V70.1524V70.1558V70.1593V70.1628V70.1662V70.1696V70.173V70.1765V70.1799V70.1833V70.1867V70.1901V70.1935V70.1969V70.2003V70.2037V70.207V70.2104V70.2138V70.2171V70.2205V70.2238V70.2271V70.2305V70.2338V70.2371V70.2404V70.2438V70.2471V70.2504V70.2537V70.2569V70.2602V70.2635V70.2668V70.2701V70.2733V70.2766V70.2798V70.2831V70.2863V70.2896V70.2928V70.296V70.2993V70.3025V70.3057V70.3089V70.3121V70.3153V70.3185V70.3217V70.3249V70.3281V70.3313V70.3344V70.3376V70.3408V70.3439V70.3471V70.3503V70.3534V70.3565V70.3597V70.3628V70.366V70.3691V70.3722V70.3753V70.3784V70.3816V70.3847V70.3878V70.3909V70.394V70.397V70.4001V70.4032V70.4063V70.4094V70.4125V70.4155V70.4186V70.4216V70.4247V70.4278V70.4308V70.4339V70.4369V70.4399V70.443V70.446V70.449V70.4521V70.4551V70.4581V70.4611V70.4641V70.4671V70.4701V70.4732V70.4762V70.4791V70.4821V70.4851V70.4881V70.4911V70.4941V70.4971V70.5V70.503V70.506V70.5089V70.5119V70.5149V70.5178V70.5208V70.5237V70.5267V70.5296V70.5326V70.5355V70.5385V70.5414V70.5443V70.5473V70.5502V70.5531V70.5561V70.559V70.5619V70.5648V70.5677V70.5706V70.5736V70.5765V70.5794V70.5823V70.5852V70.5881V70.591V70.5939V70.5968V70.5997V70.6026V70.6054V70.6083V70.6112V70.6141V70.617V70.6199V70.6227V70.6256V70.6285V70.6314V70.6342V70.6371V70.64V70.6428V70.6457V70.6486V70.6514V70.6543V70.6572V70.66V70.6629V70.6657V70.6686V70.6714V70.6743V70.6771V70.68V70.6828V70.6857V70.6885V70.6914V70.6942V70.6971V70.6999V70.7028V70.7056V70.7084V70.7113V70.7141V70.7169V70.7198V70.7226V70.7255V70.7283V70.7311V70.734V70.7368V70.7396V70.7425V70.7453V70.7481V70.751V70.7538V70.7566V70.7594V70.7623V70.7651V70.7679V70.7708V70.7736V70.7764V70.7792V70.7821V70.7849V70.7877V70.7906V70.7934V70.7962V70.799V70.8019V70.8047V70.8075V70.8103V70.8132V70.816V70.8188V70.8217V70.8245V70.8273V70.8301V70.833V70.8358V70.8386V70.8415V70.8443V70.8471V70.85V70.8528V70.8556V70.8585V70.8613V70.8642V70.867V70.8698V70.8727V70.8755V70.8783V70.8812V70.884V70.8869V70.8897V70.8926V70.8954V70.8983V70.9011V70.904V70.9068V70.9097V70.9125V70.9154V70.9182V70.9211V70.9239V70.9268V70.9297V70.9325V70.9354V70.9383V70.9411V70.944V70.9469V70.9497V70.9526V70.9555V70.9584V70.9612V70.9641V70.967V70.9699V70.9728V70.9757V70.9785V70.9814V70.9843V70.9872V70.9901V70.993V70.9959V70.9988V71.0017V71.0046V71.0075V71.0105V71.0134V71.0163V71.0192V71.0221V71.025V71.028V71.0309V71.0338V71.0368V71.0397V71.0426V71.0456V71.0485V71.0515V71.0544V71.0574V71.0603V71.0633V71.0662V71.0692V71.0722V71.0751V71.0781V71.0811V71.084V71.087V71.09V71.093V71.096V71.099V71.102V71.1049V71.1079V71.111V71.1125C16.2151 71.101 16.1707 71.0948 16.1249 71.0948H0.501706C0.76503 32.5145 31.4805 1.27292 69.3777 1.00178L69.6793 56.2245Z"
-            stroke="white" stroke-linejoin="round" class="chrono-ledger-1"></path>
-        </svg>
-        <h1>Loading</h1>
-      </div>
-      <div v-else-if="isDataEmpty()" class="flex flex-col min-w-full gap-4 pt-8 justify-center items-center">
-        <div>
-          <!--?xml version="1.0" encoding="UTF-8"?-->
-          <svg class="invert dark:invert-0" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink" width="130" height="130" viewBox="0 0 150 150" version="1.1">
-            <g id="surface1">
-              <path
-                style="fill: none; stroke-width: 0.25; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-miterlimit: 4;"
-                d="M 2 2 L 22 22 " transform="matrix(6.25,0,0,6.25,0,0)" class="no-archive-1"></path>
-              <path
-                style="fill: none; stroke-width: 0.25; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-miterlimit: 4;"
-                d="M 8.35 2.69 C 12.05 1.245 16.254375 2.126875 19.061875 4.93625 C 21.869375 7.74625 22.748125 11.95125 21.3 15.65 "
-                transform="matrix(6.25,0,0,6.25,0,0)" class="no-archive-2"></path>
-              <path
-                style="fill: none; stroke-width: 0.25; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-miterlimit: 4;"
-                d="M 19.08 19.08 C 15.17 22.99 8.83 22.99 4.92 19.08 C 1.01 15.17 1.01 8.83 4.92 4.92 "
-                transform="matrix(6.25,0,0,6.25,0,0)" class="no-archive-3"></path>
-            </g>
-          </svg>
-        </div>
-        <h1 class="pl-1">No archived organizations</h1>
-      </div>
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000">
-        <div v-for="organization in archived_ao_management_data" :key="organization.organization_id">
-          <Card
-            class="flex flex-col sm:flex-row justify-between items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-1000">
-            <div
-              class="flex flex-row justify-center items-center bg-black dark:bg-white/25 w-36 sm:w-36 md:w-36 h-36 sm:h-36 md:h-36 rounded-lg">
-              <NuxtImg src="cl.png" width="75" alt="Organization Logo" />
-            </div>
-            <div class="flex flex-col justify-between">
-              <CardHeader>
-                <CardTitle class="text-md font-normal">{{ organization.organizations.organization_name }}</CardTitle>
-                <CardDescription>{{ organization.organizations.city }} City, {{ organization.organizations.country }}
-                </CardDescription>
-              </CardHeader>
-              <CardContent class="flex flex-row items-center gap-2 w-full">
-                <Button size="sm" class="w-full">
-                  <EyeIcon class="w-4 h-4" />
-                  <span class="ml-2">View</span>
-                </Button>
-                <Button size="sm" class="w-full">
-                  <CalendarCheck2 class="w-4 h-4" />
-                  <span class="ml-2">Track</span>
-                </Button>
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <EllipsisVerticalIcon class="h-5" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem :onclick="() => handleDeleteOrganization(organization.organization_id)">Delete
-                    </DropdownMenuItem>
-                    <DropdownMenuItem :onclick="() => handleUnarchivedOrganization(organization.organization_id)">
-                      Restore
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </CardContent>
-            </div>
-          </Card>
-        </div>
-      </div>
-    </Transition>
-  </div>
+	<div class="p-8">
+		<Transition mode="out-in" name="fade">
+			<div
+				v-if="isLoading()"
+				class="flex flex-col min-w-full gap-2 pt-8 justify-center items-center"
+			>
+				<svg
+					class="invert dark:invert-0"
+					width="86"
+					height="130"
+					viewBox="0 0 86 130"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path
+						d="M16.6249 128.998V72.5755C21.0038 82.6237 31.0725 89.4663 42.3677 89.4663C58.1482 89.4663 70.6912 76.3627 70.6912 60.6571V60.6515V60.6458V60.6402V60.6345V60.6289V60.6233V60.6177V60.6121V60.6065V60.6009V60.5953V60.5898V60.5842V60.5786V60.5731V60.5676V60.562V60.5565V60.551V60.5455V60.54V60.5345V60.529V60.5235V60.518V60.5125V60.5071V60.5016V60.4961V60.4907V60.4853V60.4798V60.4744V60.469V60.4636V60.4582V60.4528V60.4474V60.442V60.4366V60.4313V60.4259V60.4206V60.4152V60.4099V60.4045V60.3992V60.3939V60.3886V60.3833V60.378V60.3727V60.3674V60.3621V60.3568V60.3516V60.3463V60.341V60.3358V60.3305V60.3253V60.3201V60.3149V60.3096V60.3044V60.2992V60.294V60.2888V60.2837V60.2785V60.2733V60.2681V60.263V60.2578V60.2527V60.2475V60.2424V60.2373V60.2322V60.227V60.2219V60.2168V60.2117V60.2066V60.2016V60.1965V60.1914V60.1863V60.1813V60.1762V60.1712V60.1661V60.1611V60.1561V60.1511V60.146V60.141V60.136V60.131V60.126V60.121V60.1161V60.1111V60.1061V60.1012V60.0962V60.0912V60.0863V60.0814V60.0764V60.0715V60.0666V60.0616V60.0567V60.0518V60.0469V60.042V60.0371V60.0323V60.0274V60.0225V60.0177V60.0128V60.0079V60.0031V59.9982V59.9934V59.9886V59.9837V59.9789V59.9741V59.9693V59.9645V59.9597V59.9549V59.9501V59.9453V59.9405V59.9358V59.931V59.9262V59.9215V59.9167V59.912V59.9072V59.9025V59.8978V59.893V59.8883V59.8836V59.8789V59.8742V59.8695V59.8648V59.8601V59.8554V59.8508V59.8461V59.8414V59.8368V59.8321V59.8274V59.8228V59.8181V59.8135V59.8089V59.8042V59.7996V59.795V59.7904V59.7858V59.7812V59.7766V59.772V59.7674V59.7628V59.7582V59.7537V59.7491V59.7445V59.74V59.7354V59.7309V59.7263V59.7218V59.7172V59.7127V59.7082V59.7037V59.6991V59.6946V59.6901V59.6856V59.6811V59.6766V59.6721V59.6676V59.6632V59.6587V59.6542V59.6497V59.6453V59.6408V59.6364V59.6319V59.6275V59.623V59.6186V59.6142V59.6097V59.6053V59.6009V59.5965V59.5921V59.5877V59.5833V59.5789V59.5745V59.5701V59.5657V59.5613V59.5569V59.5526V59.5482V59.5438V59.5395V59.5351V59.5308V59.5264V59.5221V59.5177V59.5134V59.5091V59.5047V59.5004V59.4961V59.4918V59.4875V59.4832V59.4789V59.4746V59.4703V59.466V59.4617V59.4574V59.4531V59.4488V59.4446V59.4403V59.436V59.4318V59.4275V59.4233V59.419V59.4148V59.4105V59.4063V59.402V59.3978V59.3936V59.3894V59.3851V59.3809V59.3767V59.3725V59.3683V59.3641V59.3599V59.3557V59.3515V59.3473V59.3431V59.3389V59.3348V59.3306V59.3264V59.3222V59.3181V59.3139V59.3098V59.3056V59.3014V59.2973V59.2932V59.289V59.2849V59.2807V59.2766V59.2725V59.2683V59.2642V59.2601V59.256V59.2519V59.2478V59.2437V59.2396V59.2355V59.2314V59.2273V59.2232V59.2191V59.215V59.2109V59.2068V59.2028V59.1987V59.1946V59.1905V59.1865V59.1824V59.1784V59.1743V59.1702V59.1662V59.1622V59.1581V59.1541V59.15V59.146V59.142V59.1379V59.1339V59.1299V59.1259V59.1218V59.1178V59.1138V59.1098V59.1058V59.1018V59.0978V59.0938V59.0898V59.0858V59.0818V59.0778V59.0738V59.0698V59.0658V59.0618V59.0579V59.0539V59.0499V59.0459V59.042V59.038V59.034V59.0301V59.0261V59.0222V59.0182V59.0143V59.0103V59.0064V59.0024V58.9985V58.9945V58.9906V58.9866V58.9827V58.9788V58.9748V58.9709V58.967V58.9631V58.9591V58.9552V58.9513V58.9474V58.9435V58.9396V58.9357V58.9317V58.9278V58.9239V58.92V58.9161V58.9122V58.9083V58.9052H85.4983C85.235 97.4846 54.5209 128.726 16.6249 128.998ZM69.6793 56.2245C64.8118 47.1722 55.3983 41.1771 44.5808 41.1771C28.8003 41.1771 16.2573 54.2807 16.2573 69.9863V69.9901V69.9938V69.9976V70.0013V70.0051V70.0088V70.0125V70.0162V70.0199V70.0236V70.0273V70.031V70.0347V70.0384V70.042V70.0457V70.0493V70.053V70.0566V70.0603V70.0639V70.0675V70.0711V70.0747V70.0783V70.0819V70.0855V70.0891V70.0926V70.0962V70.0998V70.1033V70.1069V70.1104V70.1139V70.1175V70.121V70.1245V70.128V70.1315V70.135V70.1385V70.142V70.1455V70.1489V70.1524V70.1558V70.1593V70.1628V70.1662V70.1696V70.173V70.1765V70.1799V70.1833V70.1867V70.1901V70.1935V70.1969V70.2003V70.2037V70.207V70.2104V70.2138V70.2171V70.2205V70.2238V70.2271V70.2305V70.2338V70.2371V70.2404V70.2438V70.2471V70.2504V70.2537V70.2569V70.2602V70.2635V70.2668V70.2701V70.2733V70.2766V70.2798V70.2831V70.2863V70.2896V70.2928V70.296V70.2993V70.3025V70.3057V70.3089V70.3121V70.3153V70.3185V70.3217V70.3249V70.3281V70.3313V70.3344V70.3376V70.3408V70.3439V70.3471V70.3503V70.3534V70.3565V70.3597V70.3628V70.366V70.3691V70.3722V70.3753V70.3784V70.3816V70.3847V70.3878V70.3909V70.394V70.397V70.4001V70.4032V70.4063V70.4094V70.4125V70.4155V70.4186V70.4216V70.4247V70.4278V70.4308V70.4339V70.4369V70.4399V70.443V70.446V70.449V70.4521V70.4551V70.4581V70.4611V70.4641V70.4671V70.4701V70.4732V70.4762V70.4791V70.4821V70.4851V70.4881V70.4911V70.4941V70.4971V70.5V70.503V70.506V70.5089V70.5119V70.5149V70.5178V70.5208V70.5237V70.5267V70.5296V70.5326V70.5355V70.5385V70.5414V70.5443V70.5473V70.5502V70.5531V70.5561V70.559V70.5619V70.5648V70.5677V70.5706V70.5736V70.5765V70.5794V70.5823V70.5852V70.5881V70.591V70.5939V70.5968V70.5997V70.6026V70.6054V70.6083V70.6112V70.6141V70.617V70.6199V70.6227V70.6256V70.6285V70.6314V70.6342V70.6371V70.64V70.6428V70.6457V70.6486V70.6514V70.6543V70.6572V70.66V70.6629V70.6657V70.6686V70.6714V70.6743V70.6771V70.68V70.6828V70.6857V70.6885V70.6914V70.6942V70.6971V70.6999V70.7028V70.7056V70.7084V70.7113V70.7141V70.7169V70.7198V70.7226V70.7255V70.7283V70.7311V70.734V70.7368V70.7396V70.7425V70.7453V70.7481V70.751V70.7538V70.7566V70.7594V70.7623V70.7651V70.7679V70.7708V70.7736V70.7764V70.7792V70.7821V70.7849V70.7877V70.7906V70.7934V70.7962V70.799V70.8019V70.8047V70.8075V70.8103V70.8132V70.816V70.8188V70.8217V70.8245V70.8273V70.8301V70.833V70.8358V70.8386V70.8415V70.8443V70.8471V70.85V70.8528V70.8556V70.8585V70.8613V70.8642V70.867V70.8698V70.8727V70.8755V70.8783V70.8812V70.884V70.8869V70.8897V70.8926V70.8954V70.8983V70.9011V70.904V70.9068V70.9097V70.9125V70.9154V70.9182V70.9211V70.9239V70.9268V70.9297V70.9325V70.9354V70.9383V70.9411V70.944V70.9469V70.9497V70.9526V70.9555V70.9584V70.9612V70.9641V70.967V70.9699V70.9728V70.9757V70.9785V70.9814V70.9843V70.9872V70.9901V70.993V70.9959V70.9988V71.0017V71.0046V71.0075V71.0105V71.0134V71.0163V71.0192V71.0221V71.025V71.028V71.0309V71.0338V71.0368V71.0397V71.0426V71.0456V71.0485V71.0515V71.0544V71.0574V71.0603V71.0633V71.0662V71.0692V71.0722V71.0751V71.0781V71.0811V71.084V71.087V71.09V71.093V71.096V71.099V71.102V71.1049V71.1079V71.111V71.1125C16.2151 71.101 16.1707 71.0948 16.1249 71.0948H0.501706C0.76503 32.5145 31.4805 1.27292 69.3777 1.00178L69.6793 56.2245Z"
+						stroke="white"
+						stroke-linejoin="round"
+						class="chrono-ledger-1"
+					></path>
+				</svg>
+				<h1>Loading</h1>
+			</div>
+			<div
+				v-else-if="isDataEmpty()"
+				class="flex flex-col min-w-full gap-4 pt-8 justify-center items-center"
+			>
+				<div>
+					<!--?xml version="1.0" encoding="UTF-8"?-->
+					<svg
+						class="invert dark:invert-0"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink"
+						width="130"
+						height="130"
+						viewBox="0 0 150 150"
+						version="1.1"
+					>
+						<g id="surface1">
+							<path
+								style="
+									fill: none;
+									stroke-width: 0.25;
+									stroke-linecap: round;
+									stroke-linejoin: round;
+									stroke: rgb(255, 255, 255);
+									stroke-opacity: 1;
+									stroke-miterlimit: 4;
+								"
+								d="M 2 2 L 22 22 "
+								transform="matrix(6.25,0,0,6.25,0,0)"
+								class="no-archive-1"
+							></path>
+							<path
+								style="
+									fill: none;
+									stroke-width: 0.25;
+									stroke-linecap: round;
+									stroke-linejoin: round;
+									stroke: rgb(255, 255, 255);
+									stroke-opacity: 1;
+									stroke-miterlimit: 4;
+								"
+								d="M 8.35 2.69 C 12.05 1.245 16.254375 2.126875 19.061875 4.93625 C 21.869375 7.74625 22.748125 11.95125 21.3 15.65 "
+								transform="matrix(6.25,0,0,6.25,0,0)"
+								class="no-archive-2"
+							></path>
+							<path
+								style="
+									fill: none;
+									stroke-width: 0.25;
+									stroke-linecap: round;
+									stroke-linejoin: round;
+									stroke: rgb(255, 255, 255);
+									stroke-opacity: 1;
+									stroke-miterlimit: 4;
+								"
+								d="M 19.08 19.08 C 15.17 22.99 8.83 22.99 4.92 19.08 C 1.01 15.17 1.01 8.83 4.92 4.92 "
+								transform="matrix(6.25,0,0,6.25,0,0)"
+								class="no-archive-3"
+							></path>
+						</g>
+					</svg>
+				</div>
+				<h1 class="pl-1">No archived organizations</h1>
+			</div>
+			<div
+				v-else
+				class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 transition-all duration-1000"
+			>
+				<div
+					v-for="organization in archived_ao_management_data"
+					:key="organization.organization_id"
+				>
+					<Card
+						class="flex flex-col sm:flex-row justify-between items-center col-span-1 h-auto sm:h-52 p-8 transition-all duration-1000"
+					>
+						<div
+							class="flex flex-row justify-center items-center bg-black dark:bg-white/25 w-36 sm:w-36 md:w-36 h-36 sm:h-36 md:h-36 rounded-lg"
+						>
+							<NuxtImg src="cl.png" width="75" alt="Organization Logo" />
+						</div>
+						<div class="flex flex-col justify-between">
+							<CardHeader>
+								<CardTitle class="text-md font-normal">{{
+									organization.organizations.organization_name
+								}}</CardTitle>
+								<CardDescription
+									>{{ organization.organizations.city }} City,
+									{{ organization.organizations.country }}
+								</CardDescription>
+							</CardHeader>
+							<CardContent class="flex flex-row items-center gap-2 w-full">
+								<Button size="sm" class="w-full">
+									<EyeIcon class="w-4 h-4" />
+									<span class="ml-2">View</span>
+								</Button>
+								<Button size="sm" class="w-full">
+									<CalendarCheck2 class="w-4 h-4" />
+									<span class="ml-2">Track</span>
+								</Button>
+								<DropdownMenu>
+									<DropdownMenuTrigger>
+										<EllipsisVerticalIcon class="h-5" />
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuItem
+											:onclick="
+												() =>
+													handleDeleteOrganization(organization.organization_id)
+											"
+											>Delete
+										</DropdownMenuItem>
+										<DropdownMenuItem
+											:onclick="
+												() =>
+													handleUnarchivedOrganization(
+														organization.organization_id
+													)
+											"
+										>
+											Restore
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</CardContent>
+						</div>
+					</Card>
+				</div>
+			</div>
+		</Transition>
+	</div>
 </template>
-
 
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
-  transition-delay: 0.3s;
+	transition: opacity 0.5s ease;
+	transition-delay: 0.3s;
 }
 
 .fade-enter-from,
 .fade-leave-to {
-  opacity: 0;
-  transition-delay: 0.3s;
+	opacity: 0;
+	transition-delay: 0.3s;
 }
 
 @-webkit-keyframes animate-svg-stroke-1 {
+	0%,
+	100% {
+		stroke-dashoffset: 518.0206298828125px;
+		stroke-dasharray: 518.0206298828125px;
+	}
 
-  0%,
-  100% {
-    stroke-dashoffset: 518.0206298828125px;
-    stroke-dasharray: 518.0206298828125px;
-  }
-
-  50% {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 518.0206298828125px;
-  }
+	50% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 518.0206298828125px;
+	}
 }
 
 @keyframes animate-svg-stroke-1 {
+	0%,
+	100% {
+		stroke-dashoffset: 518.0206298828125px;
+		stroke-dasharray: 518.0206298828125px;
+	}
 
-  0%,
-  100% {
-    stroke-dashoffset: 518.0206298828125px;
-    stroke-dasharray: 518.0206298828125px;
-  }
-
-  50% {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 518.0206298828125px;
-  }
+	50% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 518.0206298828125px;
+	}
 }
 
 .chrono-ledger-1 {
-  -webkit-animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
-  animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
+	-webkit-animation: animate-svg-stroke-1 1.5s linear 0s infinite
+		alternate-reverse;
+	animation: animate-svg-stroke-1 1.5s linear 0s infinite alternate-reverse;
 }
 
 /* no-archive animation */
 
 @keyframes animate-svg-stroke-2 {
-  0% {
-    stroke-dashoffset: 30.284271240234375px;
-    stroke-dasharray: 30.284271240234375px;
-  }
+	0% {
+		stroke-dashoffset: 30.284271240234375px;
+		stroke-dasharray: 30.284271240234375px;
+	}
 
-  100% {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 30.284271240234375px;
-  }
+	100% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 30.284271240234375px;
+	}
 }
 
 .no-archive-1 {
-  animation: animate-svg-stroke-2 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s both;
+	animation: animate-svg-stroke-2 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0s
+		both;
 }
 
 @keyframes animate-svg-stroke-3 {
-  0% {
-    stroke-dashoffset: 25.16326904296875px;
-    stroke-dasharray: 25.16326904296875px;
-  }
+	0% {
+		stroke-dashoffset: 25.16326904296875px;
+		stroke-dasharray: 25.16326904296875px;
+	}
 
-  100% {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 25.16326904296875px;
-  }
+	100% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 25.16326904296875px;
+	}
 }
 
 .no-archive-2 {
-  animation: animate-svg-stroke-3 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0.1s both;
+	animation: animate-svg-stroke-3 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+		0.1s both;
 }
 
 @keyframes animate-svg-stroke-4 {
-  0% {
-    stroke-dashoffset: 33.459808349609375px;
-    stroke-dasharray: 33.459808349609375px;
-  }
+	0% {
+		stroke-dashoffset: 33.459808349609375px;
+		stroke-dasharray: 33.459808349609375px;
+	}
 
-  100% {
-    stroke-dashoffset: 0;
-    stroke-dasharray: 33.459808349609375px;
-  }
+	100% {
+		stroke-dashoffset: 0;
+		stroke-dasharray: 33.459808349609375px;
+	}
 }
 
 .no-archive-3 {
-  animation: animate-svg-stroke-4 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) 0.2s both;
+	animation: animate-svg-stroke-4 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+		0.2s both;
 }
 </style>

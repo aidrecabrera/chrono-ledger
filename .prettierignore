@@ -5,3 +5,11 @@ coverage
 .vscode
 .output
 node_modules
+# Default
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+**/.git
+**/.svn
+**/.hg

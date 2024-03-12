@@ -1,6 +1,8 @@
 {
-  "bracketSpacing": false,
-  "singleQuote": true,
-  "trailingComma": "es5",
-  "arrowParens": "avoid"
+	"useTabs": true,
+	"semi": true,
+	"singleQuote": false,
+	"trailingComma": "es5",
+	"bracketSpacing": true,
+	"arrowParens": "always"
 }
