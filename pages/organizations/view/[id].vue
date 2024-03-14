@@ -13,8 +13,12 @@
 <script lang="ts" setup>
 import { Building2 } from "lucide-vue-next";
 import { columns } from "~/components/organization/view/columns";
+import { getAllMemberOrganizationAttendance } from "~/services/attendanceService";
 const route = useRoute()
 let id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
 const organizationDetailStoreData = computed(() => useOrganizationDetailStore().getOrganizationById(parseInt(id)))
 const organizationData = (await organizationDetailStoreData.value) || [];
+
+const data = getAllMemberOrganizationAttendance(id);
+console.log(data);
 </script>

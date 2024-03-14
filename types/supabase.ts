@@ -57,6 +57,13 @@ export type Database = {
             foreignKeyName: "public_ao_management_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "vw_organization_attendance"
+            referencedColumns: ["organization_id"]
+          },
+          {
+            foreignKeyName: "public_ao_management_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "vw_organization_info"
             referencedColumns: ["organization_id"]
           }
@@ -226,6 +233,13 @@ export type Database = {
             foreignKeyName: "public_mo_association_organization_id_fkey"
             columns: ["organization_id"]
             isOneToOne: false
+            referencedRelation: "vw_organization_attendance"
+            referencedColumns: ["organization_id"]
+          },
+          {
+            foreignKeyName: "public_mo_association_organization_id_fkey"
+            columns: ["organization_id"]
+            isOneToOne: false
             referencedRelation: "vw_organization_info"
             referencedColumns: ["organization_id"]
           }
@@ -263,6 +277,13 @@ export type Database = {
             columns: ["member_organization"]
             isOneToOne: false
             referencedRelation: "mo_association"
+            referencedColumns: ["mo_id"]
+          },
+          {
+            foreignKeyName: "public_mo_attendance_audit_organization_id_fkey"
+            columns: ["member_organization"]
+            isOneToOne: false
+            referencedRelation: "vw_organization_attendance"
             referencedColumns: ["mo_id"]
           }
         ]
@@ -349,20 +370,6 @@ export type Database = {
       }
     }
     Views: {
-      member_attendance_details: {
-        Row: {
-          am_time_in: string | null
-          am_time_out: string | null
-          attendance_date: string | null
-          first_name: string | null
-          last_name: string | null
-          organization_name: string | null
-          pm_time_in: string | null
-          pm_time_out: string | null
-          role: string | null
-        }
-        Relationships: []
-      }
       vw_member_organizations: {
         Row: {
           member_id: string | null
@@ -378,6 +385,22 @@ export type Database = {
             referencedColumns: ["id"]
           }
         ]
+      }
+      vw_organization_attendance: {
+        Row: {
+          am_time_in: string | null
+          am_time_out: string | null
+          attendance_date: string | null
+          first_name: string | null
+          last_name: string | null
+          mo_id: number | null
+          organization_id: number | null
+          organization_name: string | null
+          pm_time_in: string | null
+          pm_time_out: string | null
+          role: string | null
+        }
+        Relationships: []
       }
       vw_organization_info: {
         Row: {
