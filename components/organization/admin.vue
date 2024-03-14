@@ -35,7 +35,13 @@ const handleArchiveOrganization = async (id: number) => {
 </script>
 
 <template>
-	<div class="p-8">
+	<div class="flex flex-col p-8 gap-4">
+		<div>
+			<h1 class="text-2xl font-semibold">Other Organizations</h1>
+			<p class="text-sm text-gray-500">
+				Manage all organizations and their activities
+			</p>
+		</div>
 		<Transition mode="out-in" name="fade">
 			<div v-if="pending && ao_management_data === null">
 				<div

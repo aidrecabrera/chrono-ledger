@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import {
-	Cloud,
-	CreditCard,
 	Github,
-	Keyboard,
 	LifeBuoy,
 	LogOut,
 	Mail,
@@ -11,10 +8,9 @@ import {
 	Plus,
 	PlusCircle,
 	Settings,
-	User,
-	UserPlus,
-	Users,
 	SunMoon,
+	User,
+	UserPlus
 } from "lucide-vue-next";
 
 import { Button } from "@/components/ui/button";
@@ -26,11 +22,10 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuPortal,
 	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuSub,
 	DropdownMenuSubContent,
 	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
+	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 
 import {
@@ -38,9 +33,8 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectLabel,
 	SelectTrigger,
-	SelectValue,
+	SelectValue
 } from "@/components/ui/select";
 
 const props = defineProps({
@@ -63,9 +57,7 @@ const colorMode = useColorMode();
 			<Button variant="ghost" class="rounded-full w-10 h-10 p-0">
 				<NuxtImg
 					class="rounded-full outline outline-1 outline-background hover:outline-slate-300 transition-all duration-300"
-					src="https://github.com/radix-vue.png"
-					width="40"
-				/>
+					src="https://github.com/radix-vue.png" width="40" />
 			</Button>
 		</DropdownMenuTrigger>
 		<DropdownMenuContent class="w-56 mr-5 p-4">
@@ -110,28 +102,17 @@ const colorMode = useColorMode();
 						</DropdownMenuSubContent>
 					</DropdownMenuPortal>
 				</DropdownMenuSub>
-				<NuxtLink
-					to="/organizations/create"
-					class="flex flex-row items-center w-full"
-				>
+				<NuxtLink to="/organizations/create" class="flex flex-row items-center w-full">
 					<DropdownMenuItem class="w-full">
 						<Plus class="mr-2 h-4 w-4" />
 						<span>New Organization</span>
 					</DropdownMenuItem>
 				</NuxtLink>
 				<DropdownMenuItem class="pr-0 -mr-0">
-					<Select
-						class="appearance-none bg-transparent shadow-none"
-						v-model="colorMode.preference"
-					>
-						<SelectTrigger
-							class="outline-none border-0 h-5 appearance-none bg-transparent shadow-none"
-						>
+					<Select class="appearance-none bg-transparent shadow-none" v-model="colorMode.preference">
+						<SelectTrigger class="outline-none border-0 h-5 appearance-none bg-transparent shadow-none">
 							<SunMoon class="-ml-3 h-4 w-4" />
-							<SelectValue
-								class="ml-3 text-left w-full outline-none"
-								placeholder="Theme"
-							/>
+							<SelectValue class="ml-3 text-left w-full outline-none" placeholder="Theme" />
 						</SelectTrigger>
 						<SelectContent class="mr-[13.5rem] -mt-6">
 							<SelectGroup>
