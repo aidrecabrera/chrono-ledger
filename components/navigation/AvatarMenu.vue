@@ -2,7 +2,7 @@
 import type { AoManagement } from '~/types/aoManagement.types';
 
 const aoManagementStore = useAoManagementStore();
-const isOpenOrganization = ref(true);
+
 function isAoManagement(item: any): item is AoManagement {
 	return item && typeof item.ao_id === 'number' && typeof item.admin_id === 'string' && typeof item.organization_id === 'number';
 }
@@ -21,7 +21,7 @@ const ao_management_data = computed((): AoManagement[] | undefined => {
 			<h1 class="text-center text-2xl font-normal">Rechron</h1>
 
 		</div>
-		<NavigationAdminOrganizations :isOpenOrganization="isOpenOrganization"
+		<NavigationAdminOrganizations
 			:ao_management_data="ao_management_data" />
 	</div>
 </template>
