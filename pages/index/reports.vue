@@ -2,6 +2,9 @@
 	<div></div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { getAllMemberOrganizationAttendance } from '~/services/attendanceService';
 
-<style></style>
+const allAttendance = getAllMemberOrganizationAttendance();
+console.log(allAttendance);
+</script>
